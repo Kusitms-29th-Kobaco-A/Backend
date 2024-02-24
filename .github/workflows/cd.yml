@@ -48,7 +48,7 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
 
       - name: execute remote ssh
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_SSH_HOST }}
           username: ${{ secrets.REMOTE_SSH_USERNAME }}

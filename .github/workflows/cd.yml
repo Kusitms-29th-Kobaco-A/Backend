@@ -50,13 +50,12 @@ jobs:
       - name: execute remote ssh
         uses: appleboy/ssh-action@master
         with:
-            host: ${{ secrets.REMOTE_SSH_HOST }}
-            username: ${{ secrets.REMOTE_SSH_USERNAME }}
-            key: ${{ secrets.REMOTE_SSH_KEY }}
-            port: ${{ secrets.REMOTE_SSH_PORT }}
-            script: |
-              sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
-              sudo docker stop kobaco
-              sudo docker rm kobaco
-              sudo docker run -d -p 8080:8080 --name kobaco ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
-              sudo docker image prune -f
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
+            sudo docker stop kobaco
+            sudo docker rm kobaco
+            sudo docker run -d -p 8080:8080 --name kobaco ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
+            sudo docker image prune -f

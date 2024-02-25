@@ -9,7 +9,7 @@ on:
 jobs:
   # Spring Boot 애플리케이션을 빌드하여 도커허브에 푸시하는 과정
   build-docker-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       # 1. Java 17 세팅
@@ -48,15 +48,14 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
 
       - name: execute remote ssh
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
-            host: ${{ secrets.REMOTE_SSH_HOST }}
-            username: ${{ secrets.REMOTE_SSH_USERNAME }}
-            key: ${{ secrets.REMOTE_SSH_KEY }}
-            port: ${{ secrets.REMOTE_SSH_PORT }}
-            script: |
-              sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
-              sudo docker stop kobaco
-              sudo docker rm kobaco
-              sudo docker run -d -p 8080:8080 --name kobaco ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
-              sudo docker image prune -f
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ubuntu
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
+            sudo docker stop kobaco
+            sudo docker rm kobaco
+            sudo docker run -d -p 8080:8080 --name kobaco ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
+            sudo docker image prune -f

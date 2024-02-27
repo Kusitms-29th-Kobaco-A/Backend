@@ -1,4 +1,8 @@
 FROM openjdk:17
 ARG JAR_FILE=/build/libs/kobaco-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
+ENV TZ=Asia/Seoul \
+    DB_URL=${DB_URL} \
+    DB_USERNAME=${DB_USERNAME} \
+    DB_PASSWORD=${DB_PASSWORD} \
 ENTRYPOINT ["java","-jar","/app.jar"]

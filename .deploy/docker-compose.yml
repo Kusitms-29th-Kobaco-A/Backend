@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  kobaco:
+    image: wendyjihyo/github-actions-kobaco
+    container_name: kobaco
+    ports:
+      - 8080:8080
+    environment:
+      - DB_URL=${DB_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}

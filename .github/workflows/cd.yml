@@ -70,6 +70,7 @@ jobs:
             echo "DB_URL=${{secrets.DB_URL}}" >> .env
             echo "DB_USERNAME=${{secrets.DB_USERNAME}}" >> .env
             echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env   
+            echo "TOKEN_SECRET=${{secrets.TOKEN_SECRET}}" >> .env
             
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-kobaco
             sudo docker stop kobaco

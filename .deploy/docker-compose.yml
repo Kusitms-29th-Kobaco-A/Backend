@@ -10,3 +10,4 @@ services:
       - DB_URL=${DB_URL}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
+      - TOKEN_SECRET=${TOKEN_SECRET}

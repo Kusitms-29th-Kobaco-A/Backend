@@ -38,9 +38,8 @@ out/
 .vscode/
 
 
-!**/wrapper
-!**/.tmp
-!**/caches
-!**/jdks
-!**/daemon
-!**/native
+### OS ###
+**/caches/**
+**/daemon/**
+**/native/**
+**/wrapper/**

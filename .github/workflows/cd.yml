@@ -72,7 +72,7 @@ jobs:
             echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env   
             echo "TOKEN_SECRET=${{secrets.TOKEN_SECRET}}" >> .env
             echo "AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}" >> .env
-            echo "AWS_SECRET_KEY=${{secrets.AWS_SECRET_KEY}}" >> .env
+            echo "AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_KEY}}" >> .env
             echo "AWS_REGION=${{secrets.AWS_REGION}}" >> .env
             echo "AWS_S3_BUCKET=${{secrets.AWS_S3_BUCKET}}" >> .env
             

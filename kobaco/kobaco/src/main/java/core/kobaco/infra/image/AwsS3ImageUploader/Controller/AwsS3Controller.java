@@ -1,6 +1,7 @@
-package core.kobaco.ImageUpload;
+package core.kobaco.infra.image.AwsS3ImageUploader.Controller;
 
-import core.kobaco.ApiResponse;
+import core.kobaco.infra.image.AwsS3ImageUploader.Service.AwsS3Service;
+import core.kobaco.global.ApiResponse;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

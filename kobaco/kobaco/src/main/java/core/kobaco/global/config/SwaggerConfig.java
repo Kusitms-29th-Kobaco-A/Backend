@@ -1,4 +1,4 @@
-package core.kobaco.Config;
+package core.kobaco.global.config;
 
 
 import org.springframework.context.annotation.Bean;

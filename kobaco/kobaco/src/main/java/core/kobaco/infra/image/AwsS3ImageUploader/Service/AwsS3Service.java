@@ -1,4 +1,4 @@
-package core.kobaco.ImageUpload;
+package core.kobaco.infra.image.AwsS3ImageUploader.Service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

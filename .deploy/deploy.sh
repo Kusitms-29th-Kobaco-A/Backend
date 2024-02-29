@@ -1,3 +1,5 @@
+#! /bin/sh
+
 current_application_port=$(expr $application_port)
 
 echo ${current_application_port}
@@ -35,9 +37,10 @@ for i in {1..10}; do
 
         if [ "$cmd" -eq 202 ]; then
                 application_status="SUCCESS"
+                echo ${application_status}
                 break;
         else
-                echo "fail"
+                echo "FAIL"
                 sleep 10
         fi
 done
@@ -47,7 +50,7 @@ if [ "$application_staus" == "FAIL" ]; then
         $(docker rm -f $green_application_name)
 else
         echo "reload processing"
-        echo "set "'$service_port'" ${green_application_port}" | sudo tee /home/ubuntu/nginx/conf/service-port.inc
+        echo $(docker image prune -f)
         export application_port=${green_application_port}
         echo $(docker rename $blue_application_name $temp_application_name)
         echo $(docker rename $green_application_name $blue_application_name)

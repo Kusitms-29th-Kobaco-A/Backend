@@ -76,4 +76,5 @@ jobs:
             echo "AWS_REGION=${{secrets.AWS_REGION}}" >> .env
             echo "AWS_S3_BUCKET=${{secrets.AWS_S3_BUCKET}}" >> .env
             
-            cd deploy && . deploy.sh
+            chmod +x ./deploy/deploy.sh
+            cd deploy && source deploy.sh

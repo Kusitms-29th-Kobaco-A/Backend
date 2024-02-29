@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class SaveEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long key;
+    private Long saveId;
 
     @ManyToOne
     @JoinColumn(name = "advertisement_id", nullable = false)

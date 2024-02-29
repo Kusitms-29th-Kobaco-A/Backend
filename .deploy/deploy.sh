@@ -1,6 +1,6 @@
 #! /bin/sh
 
-current_application_port=$(expr $application_port)
+current_application_port=$((application_port))
 
 echo ${current_application_port}
 

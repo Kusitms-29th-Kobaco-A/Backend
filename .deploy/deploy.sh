@@ -1,6 +1,8 @@
-#! /bin/sh
+#! /bin/bash
 
-current_application_port=$((application_port))
+source .env
+
+current_application_port=$application_port
 
 echo ${current_application_port}
 
@@ -51,7 +53,7 @@ if [ "$application_staus" == "FAIL" ]; then
 else
         echo "reload processing"
         echo $(docker image prune -f)
-        export application_port=${green_application_port}
+        sed -i "s/application_port=.*/application_port=$green_application_port/" .env
         echo $(docker rename $blue_application_name $temp_application_name)
         echo $(docker rename $green_application_name $blue_application_name)
         echo $(docker exec -it nginx-nginx-1 service nginx reload)

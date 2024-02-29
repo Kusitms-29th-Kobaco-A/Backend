@@ -1,4 +1,4 @@
-package core.kobaco.infra.userLike;
+package core.kobaco.infra.user.like;
 
 import core.kobaco.infra.advertisement.AdvertisementEntity;
 import core.kobaco.infra.user.UserEntity;
@@ -28,7 +28,7 @@ public class UserLikeEntity {
         this.user = user;
         this.advertisement = advertisement;
     }
-    public static core.kobaco.infra.userLike.UserLikeEntity of(UserEntity user, AdvertisementEntity advertisement) {
+    public static UserLikeEntity of(UserEntity user, AdvertisementEntity advertisement) {
         return new UserLikeEntity(user, advertisement);
     }
 }

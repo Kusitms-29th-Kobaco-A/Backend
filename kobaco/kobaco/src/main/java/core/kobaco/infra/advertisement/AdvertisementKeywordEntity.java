@@ -23,13 +23,4 @@ public class AdvertisementKeywordEntity {
     @JoinColumn(name = "keyword_id", nullable = false)
     private KeywordEntity keyword;
 
-
-    private AdvertisementKeywordEntity(AdvertisementEntity advertisement, KeywordEntity keyword) {
-        this.advertisement = advertisement;
-        this.keyword = keyword;
-    }
-    public static AdvertisementKeywordEntity of(AdvertisementEntity advertisement, KeywordEntity keyword) {
-        return new AdvertisementKeywordEntity(advertisement, keyword);
-    }
-
 }

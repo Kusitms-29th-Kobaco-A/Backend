@@ -33,7 +33,7 @@ for i in {1..10}; do
 
         echo ${cmd}
 
-        if [ "$cmd" -eq 200 ]; then
+        if [ "$cmd" -eq 202 ]; then
                 application_status="SUCCESS"
                 break;
         else

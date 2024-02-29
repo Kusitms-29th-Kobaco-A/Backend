@@ -52,10 +52,10 @@ if [ "$application_staus" == "FAIL" ]; then
         $(docker rm -f $green_application_name)
 else
         echo "reload processing"
-        sed -i "s/application_port=.*/application_port=$green_application_port/" .env
         echo $(docker image prune -f)
         echo $(docker rename $blue_application_name $temp_application_name)
         echo $(docker rename $green_application_name $blue_application_name)
+        sed -i "s/application_port=.*/application_port=$green_application_port/" .env
         echo $(docker exec -it nginx-nginx-1 service nginx reload)
         echo $(docker rm -f $temp_application_name)
 fi

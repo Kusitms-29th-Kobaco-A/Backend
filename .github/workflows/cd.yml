@@ -77,4 +77,5 @@ jobs:
             echo "AWS_S3_BUCKET=${{secrets.AWS_S3_BUCKET}}" >> .env
             
             chmod +x ./deploy/deploy.sh
-            cd deploy && source deploy.sh
+            cd deploy
+            bash deploy.sh

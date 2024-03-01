@@ -48,6 +48,7 @@ public class AdvertiseService {
         );
     }
 
+    @Transactional
     public void likeAdvertise(final Long advertiseId) {
         final Long userId = userUtils.getRequestUserId();
         advertiseLikeManager.like(advertiseId, userId);

@@ -1,7 +1,7 @@
 package core.kobaco.infra.namespace;
 
 import core.kobaco.infra.BaseEntity;
-import core.kobaco.infra.advertisement.AdvertisementEntity;
+import core.kobaco.infra.advertisement.entity.AdvertisementEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

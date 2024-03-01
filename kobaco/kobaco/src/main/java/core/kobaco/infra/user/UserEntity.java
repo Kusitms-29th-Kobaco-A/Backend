@@ -17,12 +17,17 @@ public class UserEntity extends BaseEntity {
     private String email;
     private String password;
 
-    private UserEntity(String email, String password) {
+    private UserEntity(Long id, String email, String password) {
+        this.id = id;
         this.email = email;
         this.password = password;
     }
 
     public static UserEntity of(String email, String password) {
-        return new UserEntity(email, password);
+        return new UserEntity(null, email, password);
+    }
+
+    public static UserEntity from(Long id){
+        return new UserEntity(id, null, null);
     }
 }

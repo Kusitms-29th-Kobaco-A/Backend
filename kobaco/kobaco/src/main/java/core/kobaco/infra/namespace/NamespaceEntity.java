@@ -1,5 +1,6 @@
 package core.kobaco.infra.namespace;
 
+import core.kobaco.infra.BaseEntity;
 import core.kobaco.infra.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "namespace")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NamespaceEntity {
+public class NamespaceEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long namespaceId;

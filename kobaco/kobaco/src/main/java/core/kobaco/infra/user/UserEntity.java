@@ -1,5 +1,6 @@
 package core.kobaco.infra.user;
 
+import core.kobaco.infra.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserEntity {
+public class UserEntity extends BaseEntity {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

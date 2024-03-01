@@ -1,6 +1,6 @@
-package core.kobaco.infra.file;
+package core.kobaco.infra.namespace;
 
-import core.kobaco.infra.namespace.NamespaceEntity;
+import core.kobaco.infra.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "file")
 @Getter
 @NoArgsConstructor
-public class FileEntity {
+public class FileEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id")

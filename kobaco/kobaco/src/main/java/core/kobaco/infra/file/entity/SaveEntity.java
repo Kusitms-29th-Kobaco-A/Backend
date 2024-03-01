@@ -1,4 +1,4 @@
-package core.kobaco.infra.namespace;
+package core.kobaco.infra.file.entity;
 
 import core.kobaco.infra.BaseEntity;
 import core.kobaco.infra.advertisement.entity.AdvertisementEntity;

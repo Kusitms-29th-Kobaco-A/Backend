@@ -17,6 +17,7 @@ public class AdvertiseMapper {
             advertisement.getVideoUrl(),
             advertisement.getTitle(),
             advertisement.getDescription(),
+            advertisement.getUploadDate(),
             advertisement.getCopy(),
             advertisement.getCopyDetail(),
             advertisement.getAdvertisementDetail().getPeopleList(),
@@ -33,6 +34,7 @@ public class AdvertiseMapper {
             advertisementEntity.getVideoUrl(),
             advertisementEntity.getTitle(),
             advertisementEntity.getDescription(),
+            advertisementEntity.getUploadDate(),
             advertisementEntity.getCopy(),
             advertisementEntity.getCopyDetail(),
             AdvertisementDetail.of(

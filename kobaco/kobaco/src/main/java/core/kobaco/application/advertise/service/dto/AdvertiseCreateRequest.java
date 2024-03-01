@@ -3,12 +3,14 @@ package core.kobaco.application.advertise.service.dto;
 import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementDetail;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record AdvertiseCreateRequest(
     String videoUrl,
     String title,
     String description,
+    LocalDate uploadDate,
     String copy,
     String copyDetail,
     List<String> peopleList,
@@ -24,6 +26,7 @@ public record AdvertiseCreateRequest(
             videoUrl,
             title,
             description,
+            uploadDate,
             copy,
             copyDetail,
             AdvertisementDetail.of(

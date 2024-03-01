@@ -1,6 +1,6 @@
-package core.kobaco.infra.user.like;
+package core.kobaco.infra.like;
 
-import core.kobaco.infra.advertisement.AdvertisementEntity;
+import core.kobaco.infra.advertisement.entity.AdvertisementEntity;
 import core.kobaco.infra.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,10 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "like")
+@Table(name = "advertise_like")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserLikeEntity {
+public class AdvertiseLikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,12 +24,15 @@ public class UserLikeEntity {
     @JoinColumn(name = "advertisement_id", nullable = false)
     private AdvertisementEntity advertisement;
 
-    private UserLikeEntity(UserEntity user, AdvertisementEntity advertisement) {
+
+    private AdvertiseLikeEntity(Long id, UserEntity user, AdvertisementEntity advertisement) {
+        this.id = id;
         this.user = user;
         this.advertisement = advertisement;
     }
-    public static UserLikeEntity of(UserEntity user, AdvertisementEntity advertisement) {
-        return new UserLikeEntity(user, advertisement);
+
+    public static AdvertiseLikeEntity of(Long id, UserEntity user, AdvertisementEntity advertisement) {
+        return new AdvertiseLikeEntity(id, user, advertisement);
     }
 }
 

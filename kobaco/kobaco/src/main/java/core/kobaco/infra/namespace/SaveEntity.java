@@ -1,6 +1,7 @@
-package core.kobaco.infra.file;
+package core.kobaco.infra.namespace;
 
-import core.kobaco.infra.advertisement.AdvertisementEntity;
+import core.kobaco.infra.BaseEntity;
+import core.kobaco.infra.advertisement.entity.AdvertisementEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "save")
 @Getter
 @NoArgsConstructor
-public class SaveEntity {
+public class SaveEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long saveId;

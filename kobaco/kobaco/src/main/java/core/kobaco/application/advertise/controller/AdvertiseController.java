@@ -3,6 +3,7 @@ package core.kobaco.application.advertise.controller;
 import core.kobaco.application.advertise.service.AdvertiseService;
 import core.kobaco.application.advertise.service.dto.AdvertiseCreateRequest;
 import core.kobaco.application.advertise.service.dto.AdvertiseDetailResponse;
+import core.kobaco.application.advertise.service.dto.AdvertiseLikeDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,12 @@ public class AdvertiseController {
 
     @PatchMapping("/{advertiseId}/like")
     public void likeAdvertise(@PathVariable Long advertiseId) {
+        advertiseService.likeAdvertise(advertiseId);
+    }
+
+    @GetMapping("/{advertiseId}/like")
+    public AdvertiseLikeDetailResponse getAdvertiseLikeCount(@PathVariable Long advertiseId) {
+        return advertiseService.getAdvertiseLikeCount(advertiseId);
     }
 
     @PostMapping("/{advertiseId}/save")

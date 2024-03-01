@@ -24,12 +24,15 @@ public class AdvertiseLikeEntity {
     @JoinColumn(name = "advertisement_id", nullable = false)
     private AdvertisementEntity advertisement;
 
-    private AdvertiseLikeEntity(UserEntity user, AdvertisementEntity advertisement) {
+
+    private AdvertiseLikeEntity(Long id, UserEntity user, AdvertisementEntity advertisement) {
+        this.id = id;
         this.user = user;
         this.advertisement = advertisement;
     }
-    public static AdvertiseLikeEntity of(UserEntity user, AdvertisementEntity advertisement) {
-        return new AdvertiseLikeEntity(user, advertisement);
+
+    public static AdvertiseLikeEntity of(Long id, UserEntity user, AdvertisementEntity advertisement) {
+        return new AdvertiseLikeEntity(id, user, advertisement);
     }
 }
 

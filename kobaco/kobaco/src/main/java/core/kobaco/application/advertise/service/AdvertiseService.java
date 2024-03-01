@@ -2,10 +2,13 @@ package core.kobaco.application.advertise.service;
 
 import core.kobaco.application.advertise.service.dto.AdvertiseCreateRequest;
 import core.kobaco.application.advertise.service.dto.AdvertiseDetailResponse;
+import core.kobaco.application.advertise.service.dto.AdvertiseLikeDetailResponse;
 import core.kobaco.domain.advertise.service.AdvertiseAppender;
+import core.kobaco.domain.advertise.service.AdvertiseLikeManager;
 import core.kobaco.domain.advertise.service.AdvertiseReader;
 import core.kobaco.domain.keyword.service.KeywordFactory;
 import core.kobaco.domain.keyword.service.KeywordReader;
+import core.kobaco.domain.user.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AdvertiseService {
+    private final UserUtils userUtils;
     private final AdvertiseReader advertiseReader;
     private final AdvertiseAppender advertiseAppender;
     private final KeywordReader keywordReader;
     private final KeywordFactory keywordFactory;
+    private final AdvertiseLikeManager advertiseLikeManager;
 
     @Transactional
     public void createAdvertise(AdvertiseCreateRequest request){
@@ -44,11 +49,18 @@ public class AdvertiseService {
     }
 
     public void likeAdvertise(final Long advertiseId) {
+        final Long userId = userUtils.getRequestUserId();
+        advertiseLikeManager.like(advertiseId, userId);
+    }
 
+    public AdvertiseLikeDetailResponse getAdvertiseLikeCount(final Long advertiseId) {
+        return AdvertiseLikeDetailResponse.of(
+            advertiseLikeManager.isLike(advertiseId),
+            advertiseLikeManager.getLikeCount(advertiseId)
+        );
     }
 
     public void saveAdvertise(final Long advertiseId) {
-
     }
 
     public void captureAdvertise(final Long advertiseId, MultipartFile multipartFile) {

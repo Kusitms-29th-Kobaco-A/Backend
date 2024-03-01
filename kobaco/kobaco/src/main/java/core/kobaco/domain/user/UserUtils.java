@@ -15,4 +15,8 @@ public class UserUtils {
         final Long userId = jwtUtils.getRequestUserId();
         return userReader.read(userId);
     }
+
+    public Long getRequestUserId(){
+        return jwtUtils.getRequestUserId();
+    }
 }

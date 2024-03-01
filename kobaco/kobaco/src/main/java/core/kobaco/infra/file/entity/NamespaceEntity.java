@@ -14,11 +14,23 @@ import lombok.NoArgsConstructor;
 public class NamespaceEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long namespaceId;
+    @Column(name = "namespace_id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
+    private NamespaceEntity(Long id, UserEntity user) {
+        this.id = id;
+        this.user = user;
+    }
 
+    public static NamespaceEntity of(Long namespaceId, UserEntity user) {
+        return new NamespaceEntity(namespaceId, user);
+    }
+
+    public static NamespaceEntity from(Long namespaceId) {
+        return new NamespaceEntity(namespaceId, null);
+    }
 }

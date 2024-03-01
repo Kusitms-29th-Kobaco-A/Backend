@@ -20,4 +20,8 @@ public class ApiResponse<T> {
     public static <T> ResponseEntity<T> forbidden(T body) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
     }
+
+    public static <T> ResponseEntity<T> unauthorized(T body) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+    }
 }

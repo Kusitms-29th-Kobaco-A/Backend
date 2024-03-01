@@ -1,6 +1,6 @@
-package core.kobaco.infra.advertisement;
+package core.kobaco.infra.advertisement.repository;
 
-import core.kobaco.domain.advertise.AdvertisementKeyword;
+import core.kobaco.infra.advertisement.entity.AdvertisementKeywordEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

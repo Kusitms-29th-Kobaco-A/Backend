@@ -1,16 +1,13 @@
-package core.kobaco.infra.advertisement;
+package core.kobaco.infra.advertisement.entity;
 
 import core.kobaco.infra.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity

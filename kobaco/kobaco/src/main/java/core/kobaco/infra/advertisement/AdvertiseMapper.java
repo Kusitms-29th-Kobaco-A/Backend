@@ -3,6 +3,8 @@ package core.kobaco.infra.advertisement;
 import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementDetail;
 import core.kobaco.domain.advertise.AdvertisementKeyword;
+import core.kobaco.infra.advertisement.entity.AdvertisementEntity;
+import core.kobaco.infra.advertisement.entity.AdvertisementKeywordEntity;
 import core.kobaco.infra.keyword.KeywordEntity;
 import org.springframework.stereotype.Component;
 

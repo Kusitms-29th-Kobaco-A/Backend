@@ -1,6 +1,6 @@
 package core.kobaco.infra.like;
 
-import core.kobaco.infra.advertisement.AdvertisementEntity;
+import core.kobaco.infra.advertisement.entity.AdvertisementEntity;
 import core.kobaco.infra.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

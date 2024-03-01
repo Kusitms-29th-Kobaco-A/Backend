@@ -6,10 +6,11 @@ import core.kobaco.application.file.service.dto.DirectoryDetailResponse;
 import core.kobaco.application.file.service.dto.DirectoryUpdateRequest;
 import core.kobaco.application.file.service.dto.NamespaceDetailResponse;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,9 +20,9 @@ import org.springframework.web.bind.annotation.*;
 public class FileController {
     private final FileService fileService;
 
-    @GetMapping(path = {"/{directoryId}", "/"})
+    @GetMapping(path = {"/{directoryId}", ""})
     public DirectoryDetailResponse getFiles(
-        @Parameter(required = false) @PathVariable(required = false) Long directoryId) {
+        @PathVariable(required = false) Long directoryId) {
         return fileService.getFiles(directoryId);
     }
 

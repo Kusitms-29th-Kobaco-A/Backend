@@ -2,6 +2,7 @@ package core.kobaco.infra.jpa.file;
 
 import core.kobaco.domain.file.File;
 import core.kobaco.domain.file.FileRepository;
+import core.kobaco.domain.file.FileType;
 import core.kobaco.infra.jpa.file.repository.FileJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,24 @@ public class FileRepositoryImpl implements FileRepository {
     @Override
     public Optional<File> findRootDirectoryByNamespaceId(Long namespaceId) {
         return fileJpaRepository.findRootDirectoryByNamespaceId(namespaceId)
+            .map(fileMapper::toDomain);
+    }
+
+    @Override
+    public Optional<File> findCaptureDirectoryByUserId(Long userId) {
+        return fileJpaRepository.findRootSubDirectoryByUserIdAndFileType(userId, FileType.CAPTURE_DIRECTORY)
+            .map(fileMapper::toDomain);
+    }
+
+    @Override
+    public Optional<File> findBasicDirectoryByUserId(Long userId) {
+        return fileJpaRepository.findRootSubDirectoryByUserIdAndFileType(userId, FileType.BASIC_DIRECTORY)
+            .map(fileMapper::toDomain);
+    }
+
+    @Override
+    public Optional<File> findByFileName(String fileName) {
+        return fileJpaRepository.findByFileName(fileName)
             .map(fileMapper::toDomain);
     }
 

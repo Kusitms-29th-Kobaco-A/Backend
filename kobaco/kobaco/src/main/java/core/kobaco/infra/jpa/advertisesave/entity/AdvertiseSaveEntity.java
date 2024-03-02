@@ -1,4 +1,4 @@
-package core.kobaco.infra.jpa.advertisesave;
+package core.kobaco.infra.jpa.advertisesave.entity;
 
 import core.kobaco.infra.jpa.BaseEntity;
 import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;

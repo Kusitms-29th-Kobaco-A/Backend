@@ -22,7 +22,6 @@ public class AdvertisementEntity extends BaseEntity {
 
     private String videoUrl;
     private String title;
-    private String description;
     private LocalDate uploadDate;
     private String copy;
     private String copyDetail;
@@ -37,7 +36,7 @@ public class AdvertisementEntity extends BaseEntity {
     private AdvertisementEntity(Long id,
                                 String videoUrl,
                                 String title,
-                                String description, LocalDate uploadDate,
+                                LocalDate uploadDate,
                                 String copy,
                                 String copyDetail,
                                 List<String> peopleList,
@@ -48,7 +47,6 @@ public class AdvertisementEntity extends BaseEntity {
         this.id = id;
         this.videoUrl = videoUrl;
         this.title = title;
-        this.description = description;
         this.uploadDate = uploadDate;
         this.copy = copy;
         this.copyDetail = copyDetail;
@@ -63,7 +61,6 @@ public class AdvertisementEntity extends BaseEntity {
         Long id,
         String videoUrl,
         String title,
-        String description,
         LocalDate uploadDate,
         String copy,
         String copyDetail,
@@ -72,11 +69,11 @@ public class AdvertisementEntity extends BaseEntity {
         String owner,
         String ownerCompany,
         String makerCompany) {
-        return new AdvertisementEntity(id, videoUrl, title, description, uploadDate, copy, copyDetail, peopleList, objectList, owner, ownerCompany, makerCompany);
+        return new AdvertisementEntity(id, videoUrl, title, uploadDate, copy, copyDetail, peopleList, objectList, owner, ownerCompany, makerCompany);
     }
 
     public static AdvertisementEntity from(Long id){
-        return new AdvertisementEntity(id, null, null, null, null, null, null, null, null, null, null, null);
+        return new AdvertisementEntity(id, null, null, null, null, null, null, null, null, null, null);
     }
 }
 

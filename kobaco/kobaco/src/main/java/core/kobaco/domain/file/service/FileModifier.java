@@ -12,7 +12,7 @@ public class FileModifier {
     private final FileReader fileReader;
 
     public void updateDirectory(final Long directoryId, final String directoryName){
-        File directory = fileReader.getDirectory(directoryId);
+        File directory = fileReader.getFile(directoryId);
         if(directory.isRootDirectory()){
             throw new IllegalArgumentException("Root directory name cannot be updated");
         }

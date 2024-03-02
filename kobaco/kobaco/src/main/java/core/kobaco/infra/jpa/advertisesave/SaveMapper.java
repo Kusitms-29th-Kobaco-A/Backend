@@ -1,7 +1,10 @@
 package core.kobaco.infra.jpa.advertisesave;
 
+import core.kobaco.domain.advertisesave.AdvertiseCapture;
 import core.kobaco.domain.advertisesave.AdvertiseSave;
 import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
+import core.kobaco.infra.jpa.advertisesave.entity.AdvertiseCaptureEntity;
+import core.kobaco.infra.jpa.advertisesave.entity.AdvertiseSaveEntity;
 import core.kobaco.infra.jpa.file.entity.FileEntity;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +22,26 @@ public class SaveMapper {
     public AdvertiseSave toDomain(AdvertiseSaveEntity advertiseSaveEntity) {
         return AdvertiseSave.of(
             advertiseSaveEntity.getId(),
-            advertiseSaveEntity.getAdvertisement().getId(),
-            advertiseSaveEntity.getFile().getId()
+            advertiseSaveEntity.getFile().getId(),
+            advertiseSaveEntity.getAdvertisement().getId()
+        );
+    }
+
+    public AdvertiseCapture toDomain(AdvertiseCaptureEntity advertiseCaptureEntity) {
+        return AdvertiseCapture.of(
+            advertiseCaptureEntity.getId(),
+            advertiseCaptureEntity.getImageUrl(),
+            advertiseCaptureEntity.getImageFile().getId(),
+            advertiseCaptureEntity.getAdvertisement().getId()
+        );
+    }
+
+    public AdvertiseCaptureEntity toEntity(AdvertiseCapture advertiseCapture) {
+        return AdvertiseCaptureEntity.of(
+            advertiseCapture.getCaptureId(),
+            advertiseCapture.getImageUrl(),
+            FileEntity.from(advertiseCapture.getFileId()),
+            AdvertisementEntity.from(advertiseCapture.getAdvertiseId())
         );
     }
 }

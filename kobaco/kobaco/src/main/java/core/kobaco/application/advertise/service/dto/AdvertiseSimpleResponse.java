@@ -1,10 +1,13 @@
 package core.kobaco.application.advertise.service.dto;
 
+import java.sql.Time;
 import java.util.List;
 
 public record AdvertiseSimpleResponse (
-    String previewImageUrl,
+    Long advertiseId,
+    String videoUrl,
     String title,
-    List<String> keywords
+    Time videoTime,
+    List<String> keywordList
 ){
 }

@@ -1,7 +1,6 @@
 package core.kobaco.application.advertise.service.dto;
 
 import core.kobaco.domain.advertise.Advertisement;
-import core.kobaco.domain.advertise.AdvertisementKeyword;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +9,6 @@ public record AdvertiseDetailResponse(
     Long advertiseId,
     String videoUrl,
     String title,
-    String description,
     LocalDate uploadDate,
     String copy,
     String copyDetail,
@@ -27,7 +25,6 @@ public record AdvertiseDetailResponse(
             advertisement.getAdvertiseId(),
             advertisement.getVideoUrl(),
             advertisement.getTitle(),
-            advertisement.getDescription(),
             advertisement.getUploadDate(),
             advertisement.getCopy(),
             advertisement.getCopyDetail(),

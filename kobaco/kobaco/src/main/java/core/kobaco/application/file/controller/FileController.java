@@ -27,6 +27,7 @@ public class FileController {
         - DIRECTORY: 디렉토리   
         - CAPTURE: 캡쳐 이미지
         - ADVERTISE: 광고
+        - BASIC_DIRECTORY: 기본 디렉토리
             """)
     @GetMapping(path = {"/{directoryId}", ""})
     public DirectoryDetailResponse getFiles(

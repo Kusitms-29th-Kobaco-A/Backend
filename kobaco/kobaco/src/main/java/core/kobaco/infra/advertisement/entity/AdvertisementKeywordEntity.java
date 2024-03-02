@@ -1,7 +1,7 @@
 package core.kobaco.infra.advertisement.entity;
 
-import core.kobaco.infra.BaseEntity;
-import core.kobaco.infra.keyword.KeywordEntity;
+import core.kobaco.infra.jpa.BaseEntity;
+import core.kobaco.infra.jpa.keyword.KeywordEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

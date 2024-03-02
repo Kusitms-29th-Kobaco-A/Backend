@@ -1,9 +1,11 @@
 package core.kobaco.infra.config;
 
 import core.kobaco.global.jwt.JwtHeaderConsts;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,12 @@ import java.util.List;
     type= SecuritySchemeType.APIKEY,
     name = JwtHeaderConsts.AUTHORIZATION_HEADER,
     in = SecuritySchemeIn.HEADER, description = "Bearer {token}"
+)
+@OpenAPIDefinition(
+    servers = {
+        @Server(url="dev.simproject.kr", description = "Default Server url"),
+        @Server(url="localhost:8080", description = "Local Server url")
+    }
 )
 public class SwaggerConfig {
 

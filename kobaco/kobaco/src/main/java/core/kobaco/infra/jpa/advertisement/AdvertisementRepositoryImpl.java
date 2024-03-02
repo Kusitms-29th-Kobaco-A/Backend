@@ -1,8 +1,8 @@
-package core.kobaco.infra.advertisement;
+package core.kobaco.infra.jpa.advertisement;
 
 import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementRepository;
-import core.kobaco.infra.advertisement.repository.AdvertisementJpaRepository;
+import core.kobaco.infra.jpa.advertisement.repository.AdvertisementJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

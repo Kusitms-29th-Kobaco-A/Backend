@@ -4,8 +4,6 @@ import core.kobaco.application.advertise.service.AdvertiseService;
 import core.kobaco.application.advertise.service.dto.AdvertiseCreateRequest;
 import core.kobaco.application.advertise.service.dto.AdvertiseDetailResponse;
 import core.kobaco.application.advertise.service.dto.AdvertiseLikeDetailResponse;
-import core.kobaco.application.advertise.service.dto.AdvertiseSaveRequest;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,18 +38,5 @@ public class AdvertiseController {
     @GetMapping("/{advertiseId}/like")
     public AdvertiseLikeDetailResponse getAdvertiseLikeCount(@PathVariable Long advertiseId) {
         return advertiseService.getAdvertiseLikeCount(advertiseId);
-    }
-
-    @PostMapping("/{advertiseId}/save")
-    public void saveAdvertise(@PathVariable Long advertiseId) {
-    }
-
-    @GetMapping("/{advertiseId}/save")
-    public void getIsSaveAdvertise(@PathVariable Long advertiseId, @RequestBody AdvertiseSaveRequest request) {
-
-    }
-
-    @PostMapping("/{advertiseId}/capture")
-    public void captureAdvertise(@PathVariable Long advertiseId) {
     }
 }

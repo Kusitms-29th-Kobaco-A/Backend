@@ -19,12 +19,9 @@ import java.util.List;
     name = JwtHeaderConsts.AUTHORIZATION_HEADER,
     in = SecuritySchemeIn.HEADER, description = "Bearer {token}"
 )
-@OpenAPIDefinition(
-    servers = {
-        @Server(url="dev.simproject.kr", description = "Default Server url"),
-        @Server(url="localhost:8080", description = "Local Server url")
-    }
-)
+@OpenAPIDefinition(servers = {
+    @Server(url = "/", description = "Default Server URL")
+})
 public class SwaggerConfig {
 
     @Bean

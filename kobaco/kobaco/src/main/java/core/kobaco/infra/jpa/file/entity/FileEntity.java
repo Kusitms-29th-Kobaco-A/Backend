@@ -29,9 +29,8 @@ public class FileEntity extends BaseEntity {
     @JoinColumn(name = "namespace_id")
     private NamespaceEntity namespace;
 
-    private FileEntity(Long id, String originalPath, String fileName, FileType fileType, FileEntity parentFile, NamespaceEntity namespace) {
+    private FileEntity(Long id, String fileName, FileType fileType, FileEntity parentFile, NamespaceEntity namespace) {
         this.id = id;
-        this.originalPath = originalPath;
         this.fileName = fileName;
         this.fileType = fileType;
         this.parentFile = parentFile;
@@ -40,17 +39,16 @@ public class FileEntity extends BaseEntity {
 
     public static FileEntity of(
         Long fileId,
-        String originalPath,
         String fileName,
         FileType fileType,
         FileEntity parentFile,
         NamespaceEntity namespace
     ) {
-        return new FileEntity(fileId, originalPath, fileName, fileType, parentFile, namespace);
+        return new FileEntity(fileId, fileName, fileType, parentFile, namespace);
     }
 
     public static FileEntity from(Long fileId) {
-        return new FileEntity(fileId, null, null, null, null, null);
+        return new FileEntity(fileId, null, null, null, null);
     }
 
 

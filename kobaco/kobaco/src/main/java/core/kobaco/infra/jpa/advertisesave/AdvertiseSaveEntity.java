@@ -1,7 +1,8 @@
-package core.kobaco.infra.jpa.file.entity;
+package core.kobaco.infra.jpa.advertisesave;
 
 import core.kobaco.infra.jpa.BaseEntity;
-import core.kobaco.infra.advertisement.entity.AdvertisementEntity;
+import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
+import core.kobaco.infra.jpa.file.entity.FileEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,12 +25,13 @@ public class AdvertiseSaveEntity extends BaseEntity {
     @JoinColumn(name = "file_id", nullable = false)
     private FileEntity file;
 
-    private AdvertiseSaveEntity(AdvertisementEntity advertisement, FileEntity file) {
+    private AdvertiseSaveEntity(Long id, AdvertisementEntity advertisement, FileEntity file) {
+        this.id = id;
         this.advertisement = advertisement;
         this.file = file;
     }
 
-    public static AdvertiseSaveEntity of(AdvertisementEntity advertisement, FileEntity file){
-        return new AdvertiseSaveEntity(advertisement, file);
+    public static AdvertiseSaveEntity of(Long id, AdvertisementEntity advertisement, FileEntity file) {
+        return new AdvertiseSaveEntity(id, advertisement, file);
     }
 }

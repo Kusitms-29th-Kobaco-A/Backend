@@ -1,6 +1,6 @@
-package core.kobaco.infra.advertisement.repository;
+package core.kobaco.infra.jpa.advertisement.repository;
 
-import core.kobaco.infra.advertisement.entity.AdvertisementEntity;
+import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementEntity, Long> {

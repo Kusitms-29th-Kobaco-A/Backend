@@ -1,4 +1,4 @@
-package core.kobaco.infra.advertisement.entity;
+package core.kobaco.infra.jpa.advertisement.entity;
 
 import core.kobaco.infra.jpa.BaseEntity;
 import core.kobaco.infra.jpa.keyword.KeywordEntity;

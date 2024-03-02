@@ -13,7 +13,6 @@ public class FileMapper {
     public FileEntity toEntity(File file) {
         return FileEntity.of(
             file.getFileId(),
-            file.getOriginalPath(),
             file.getFileName(),
             file.getFileType(),
             file.getParentFileId() != null ? FileEntity.from(file.getParentFileId()) : null,
@@ -24,7 +23,6 @@ public class FileMapper {
     public File toDomain(FileEntity fileEntity) {
         return File.of(
             fileEntity.getId(),
-            fileEntity.getOriginalPath(),
             fileEntity.getFileName(),
             fileEntity.getFileType(),
             fileEntity.getParentFile() != null ? fileEntity.getParentFile().getId() : null,

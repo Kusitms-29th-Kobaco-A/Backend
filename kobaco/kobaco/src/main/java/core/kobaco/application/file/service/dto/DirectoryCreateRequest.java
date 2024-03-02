@@ -9,7 +9,6 @@ public record DirectoryCreateRequest(
     public File toDomain(final Long parentDirectoryId){
         return File.of(
             null,
-            null,
             directoryName,
             FileType.DIRECTORY,
             parentDirectoryId,

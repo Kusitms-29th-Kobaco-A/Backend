@@ -1,6 +1,7 @@
 package core.kobaco.domain.user;
 
 import core.kobaco.domain.user.service.UserReader;
+import core.kobaco.domain.user.service.UserValidator;
 import core.kobaco.global.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,6 @@ public class UserUtils {
     }
 
     public Long getRequestUserId(){
-        return jwtUtils.getRequestUserId();
+        return getRequestUser().getId();
     }
 }

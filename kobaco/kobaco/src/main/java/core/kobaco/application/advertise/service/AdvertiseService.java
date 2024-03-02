@@ -3,9 +3,11 @@ package core.kobaco.application.advertise.service;
 import core.kobaco.application.advertise.service.dto.AdvertiseCreateRequest;
 import core.kobaco.application.advertise.service.dto.AdvertiseDetailResponse;
 import core.kobaco.application.advertise.service.dto.AdvertiseLikeDetailResponse;
+import core.kobaco.application.advertise.service.dto.AdvertiseSaveRequest;
 import core.kobaco.domain.advertise.service.AdvertiseAppender;
 import core.kobaco.domain.advertise.service.AdvertiseLikeManager;
 import core.kobaco.domain.advertise.service.AdvertiseReader;
+import core.kobaco.domain.advertise.service.AdvertiseSaveManager;
 import core.kobaco.domain.keyword.service.KeywordFactory;
 import core.kobaco.domain.keyword.service.KeywordReader;
 import core.kobaco.domain.user.UserUtils;
@@ -26,6 +28,7 @@ public class AdvertiseService {
     private final KeywordReader keywordReader;
     private final KeywordFactory keywordFactory;
     private final AdvertiseLikeManager advertiseLikeManager;
+//    private final AdvertiseSaveManager advertiseSaveManager;
 
     @Transactional
     public void createAdvertise(AdvertiseCreateRequest request){
@@ -61,9 +64,13 @@ public class AdvertiseService {
         );
     }
 
-    public void saveAdvertise(final Long advertiseId) {
+    @Transactional
+    public void saveAdvertise(final Long advertiseId, final AdvertiseSaveRequest request) {
+        final Long userId = userUtils.getRequestUserId();
+
     }
 
+    @Transactional
     public void captureAdvertise(final Long advertiseId, MultipartFile multipartFile) {
 
     }

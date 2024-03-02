@@ -3,7 +3,6 @@ package core.kobaco.application.file.service;
 import core.kobaco.application.file.service.dto.DirectoryCreateRequest;
 import core.kobaco.application.file.service.dto.DirectoryDetailResponse;
 import core.kobaco.application.file.service.dto.DirectoryUpdateRequest;
-import core.kobaco.application.file.service.dto.NamespaceDetailResponse;
 import core.kobaco.domain.file.File;
 import core.kobaco.domain.file.service.FileAppender;
 import core.kobaco.domain.file.service.FileFactory;
@@ -28,12 +27,9 @@ public class FileService {
 
     @Transactional
     public DirectoryDetailResponse getFiles(Long directoryId) {
-        File directory;
-        if(Objects.isNull(directoryId)){
-            directory = fileFactory.upsertRootDirectory(userUtils.getRequestUserId());
-        }else{
-            directory = fileReader.getDirectory(directoryId);
-        }
+        final File directory = Objects.isNull(directoryId)
+            ? fileFactory.createRootDirectory(userUtils.getRequestUserId())
+            : fileReader.getDirectory(directoryId);
         return DirectoryDetailResponse.of(
             directory.getFileId(),
             directory.getFileName(),

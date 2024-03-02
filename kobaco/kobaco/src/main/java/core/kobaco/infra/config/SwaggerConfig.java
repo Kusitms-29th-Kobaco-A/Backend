@@ -1,4 +1,4 @@
-package core.kobaco.infra.jpa.config;
+package core.kobaco.infra.config;
 
 import core.kobaco.global.jwt.JwtHeaderConsts;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;

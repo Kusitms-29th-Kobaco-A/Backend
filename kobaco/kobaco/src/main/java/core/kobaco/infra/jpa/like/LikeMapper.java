@@ -1,7 +1,7 @@
 package core.kobaco.infra.jpa.like;
 
 import core.kobaco.domain.like.AdvertiseLike;
-import core.kobaco.infra.advertisement.entity.AdvertisementEntity;
+import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
 import core.kobaco.infra.jpa.user.UserEntity;
 import org.springframework.stereotype.Component;
 

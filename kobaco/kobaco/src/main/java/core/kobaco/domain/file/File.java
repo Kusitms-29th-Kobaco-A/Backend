@@ -8,15 +8,13 @@ public class File {
     private static final String ROOT_DIRECTORY_NAME = "root";
 
     private Long fileId;
-    private String originalPath;
     private String fileName;
     private FileType fileType;
     private Long parentFileId;
     private Long namespaceId;
 
-    private File(Long fileId, String originalPath, String fileName, FileType fileType, Long parentFileId, Long namespaceId) {
+    private File(Long fileId, String fileName, FileType fileType, Long parentFileId, Long namespaceId) {
         this.fileId = fileId;
-        this.originalPath = originalPath;
         this.fileName = fileName;
         this.fileType = fileType;
         this.parentFileId = parentFileId;
@@ -25,17 +23,20 @@ public class File {
 
     public static File of(
         Long fileId,
-        String originalPath,
         String fileName,
         FileType fileType,
         Long parentFileId,
         Long namespaceId
     ) {
-        return new File(fileId, originalPath, fileName, fileType, parentFileId, namespaceId);
+        return new File(fileId, fileName, fileType, parentFileId, namespaceId);
     }
 
     public static File rootDirectory(Long namespaceId){
-        return new File(null, null, ROOT_DIRECTORY_NAME, FileType.DIRECTORY, null, namespaceId);
+        return new File(null, ROOT_DIRECTORY_NAME, FileType.DIRECTORY, null, namespaceId);
+    }
+
+    public static File of(FileType fileType, Long parentFileId){
+        return new File(null, null, fileType, parentFileId, null);
     }
 
     public void updateDirectoryName(String directoryName){

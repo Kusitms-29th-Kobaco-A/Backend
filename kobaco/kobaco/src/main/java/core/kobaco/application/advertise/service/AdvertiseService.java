@@ -3,7 +3,7 @@ package core.kobaco.application.advertise.service;
 import core.kobaco.application.advertise.service.dto.AdvertiseCreateRequest;
 import core.kobaco.application.advertise.service.dto.AdvertiseDetailResponse;
 import core.kobaco.application.advertise.service.dto.AdvertiseLikeDetailResponse;
-import core.kobaco.application.advertisesave.service.dto.AdvertiseSaveRequest;
+import core.kobaco.application.advertise.service.dto.AdvertiseSimpleResponse;
 import core.kobaco.domain.advertise.service.AdvertiseAppender;
 import core.kobaco.domain.advertise.service.AdvertiseLikeManager;
 import core.kobaco.domain.advertise.service.AdvertiseReader;
@@ -11,10 +11,10 @@ import core.kobaco.domain.keyword.service.KeywordFactory;
 import core.kobaco.domain.keyword.service.KeywordReader;
 import core.kobaco.domain.user.UserUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,8 +35,16 @@ public class AdvertiseService {
         advertiseAppender.append(request.toDomain(), keywordIdList);
     }
 
-    public void getAdvertiseList(){
-
+    public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable){
+//        return advertiseReader.getAdvertiseList(pageable)
+//            .map(advertise -> AdvertiseSimpleResponse.of(
+//                advertise,
+//                advertiseReader.getAdvertiseKeyword(advertise.getAdvertiseId())
+//                    .stream()
+//                    .map(keyword -> keywordReader.getKeyword(keyword.getKeywordId()).getKeyword())
+//                    .toList()
+//            ));
+        return null;
     }
 
 

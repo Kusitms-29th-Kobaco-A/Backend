@@ -1,7 +1,12 @@
 package core.kobaco.domain.advertise.service;
 
-import core.kobaco.domain.advertise.*;
+import core.kobaco.domain.advertise.Advertisement;
+import core.kobaco.domain.advertise.AdvertisementKeyword;
+import core.kobaco.domain.advertise.AdvertisementKeywordRepository;
+import core.kobaco.domain.advertise.AdvertisementRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +24,10 @@ public class AdvertiseReader {
 
     public List<AdvertisementKeyword> getAdvertiseKeyword(Long advertiseId) {
         return advertisementKeywordRepository.findAllByAdvertiseId(advertiseId);
+    }
+
+    public Page<Advertisement> getAllAdvertiseList(Pageable pageable) {
+        return advertisementRepository.findAll(pageable);
     }
 
 }

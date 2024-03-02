@@ -9,7 +9,6 @@ import java.util.List;
 public record AdvertiseCreateRequest(
     String videoUrl,
     String title,
-    String description,
     LocalDate uploadDate,
     String copy,
     String copyDetail,
@@ -25,7 +24,6 @@ public record AdvertiseCreateRequest(
             null,
             videoUrl,
             title,
-            description,
             uploadDate,
             copy,
             copyDetail,

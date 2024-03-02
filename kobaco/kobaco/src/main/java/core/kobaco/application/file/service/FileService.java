@@ -4,10 +4,7 @@ import core.kobaco.application.file.service.dto.DirectoryCreateRequest;
 import core.kobaco.application.file.service.dto.DirectoryDetailResponse;
 import core.kobaco.application.file.service.dto.DirectoryUpdateRequest;
 import core.kobaco.domain.file.File;
-import core.kobaco.domain.file.service.FileAppender;
-import core.kobaco.domain.file.service.FileFactory;
-import core.kobaco.domain.file.service.FileModifier;
-import core.kobaco.domain.file.service.FileReader;
+import core.kobaco.domain.file.service.*;
 import core.kobaco.domain.user.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,17 +20,19 @@ public class FileService {
     private final FileReader fileReader;
     private final FileFactory fileFactory;
     private final FileAppender fileAppender;
+    private final FileFormatter fileFormatter;
     private final FileModifier fileModifier;
 
     @Transactional
     public DirectoryDetailResponse getFiles(Long directoryId) {
         final File directory = Objects.isNull(directoryId)
             ? fileFactory.createRootDirectory(userUtils.getRequestUserId())
-            : fileReader.getDirectory(directoryId);
+            : fileReader.getFile(directoryId);
         return DirectoryDetailResponse.of(
             directory.getFileId(),
             directory.getFileName(),
-            fileReader.getDirectoryFiles(directory.getFileId())
+            fileReader.getDirectoryFiles(directory.getFileId()),
+            fileFormatter::format
         );
     }
 

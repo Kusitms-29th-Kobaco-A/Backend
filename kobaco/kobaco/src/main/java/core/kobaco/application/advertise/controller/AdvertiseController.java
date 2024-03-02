@@ -4,11 +4,17 @@ import core.kobaco.application.advertise.service.AdvertiseService;
 import core.kobaco.application.advertise.service.dto.AdvertiseCreateRequest;
 import core.kobaco.application.advertise.service.dto.AdvertiseDetailResponse;
 import core.kobaco.application.advertise.service.dto.AdvertiseLikeDetailResponse;
+import core.kobaco.application.advertise.service.dto.AdvertiseSimpleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +30,17 @@ public class AdvertiseController {
 
     @Operation(summary = "광고 목록 조회")
     @GetMapping
-    public Page<String> getAdvertiseList(Pageable pageable) {
-        return null;
+    public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable) {
+        List<AdvertiseSimpleResponse> advertiseList = List.of(
+            new AdvertiseSimpleResponse(
+                1L,
+                "광고 이미지 URL",
+                "광고 제목",
+                Time.valueOf(LocalTime.of(0, 4,23)),
+                List.of("광고 태그1", "광고 태그2")
+            )
+        );
+        return new PageImpl<>(advertiseList, pageable, advertiseList.size());
     }
 
     @Operation(summary = "광고 상세 조회")

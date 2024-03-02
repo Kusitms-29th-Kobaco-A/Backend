@@ -16,9 +16,14 @@ public class FileReader {
         return fileRepository.findAllByFileId(directoryId);
     }
 
-    public File getDirectory(final Long directoryId){
+    public File getFile(final Long directoryId){
         return fileRepository.findByFileId(directoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Directory not found"));
+    }
+
+    public File getCaptureDirectoryByUserId(final Long userId){
+        return fileRepository.findCaptureDirectoryByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Capture directory not found"));
     }
 
 }

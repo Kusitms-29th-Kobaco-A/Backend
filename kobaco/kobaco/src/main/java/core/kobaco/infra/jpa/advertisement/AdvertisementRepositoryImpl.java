@@ -4,6 +4,8 @@ import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementRepository;
 import core.kobaco.infra.jpa.advertisement.repository.AdvertisementJpaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -22,5 +24,10 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
     @Override
     public Advertisement save(Advertisement advertisement) {
         return advertiseMapper.toDomain(advertisementJpaRepository.save(advertiseMapper.toEntity(advertisement)));
+    }
+
+    @Override
+    public Page<Advertisement> findAll(Pageable pageable) {
+        return null;
     }
 }

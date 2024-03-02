@@ -18,7 +18,7 @@ public class FileFactory {
             .orElseGet(() -> namespaceRepository.save(Namespace.from(userId)));
     }
 
-    public File upsertRootDirectory(final Long userId){
+    public File createRootDirectory(final Long userId){
         Namespace namespace = upsert(userId);
         return fileRepository.findRootDirectoryByNamespaceId(namespace.getNamespaceId())
             .orElseGet(() -> fileRepository.save(File.rootDirectory(namespace.getNamespaceId())));

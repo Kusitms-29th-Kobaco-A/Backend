@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -13,6 +14,7 @@ public class Advertisement {
     private String videoUrl;
     private String title;
     private String description;
+    private LocalDate uploadDate;
     private String copy;
     private String copyDetail;
     private AdvertisementDetail advertisementDetail;
@@ -21,9 +23,10 @@ public class Advertisement {
                                    String videoUrl,
                                    String title,
                                    String description,
+                                   LocalDate uploadDate,
                                    String copy,
                                    String copyDetail,
                                    AdvertisementDetail advertisementDetail) {
-        return new Advertisement(advertiseId, videoUrl, title, description, copy, copyDetail, advertisementDetail);
+        return new Advertisement(advertiseId, videoUrl, title, description, uploadDate,copy, copyDetail, advertisementDetail);
     }
 }

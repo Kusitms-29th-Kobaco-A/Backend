@@ -3,6 +3,7 @@ package core.kobaco.application.advertise.service.dto;
 import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementKeyword;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record AdvertiseDetailResponse(
@@ -10,6 +11,7 @@ public record AdvertiseDetailResponse(
     String videoUrl,
     String title,
     String description,
+    LocalDate uploadDate,
     String copy,
     String copyDetail,
     List<String> peopleList,
@@ -26,6 +28,7 @@ public record AdvertiseDetailResponse(
             advertisement.getVideoUrl(),
             advertisement.getTitle(),
             advertisement.getDescription(),
+            advertisement.getUploadDate(),
             advertisement.getCopy(),
             advertisement.getCopyDetail(),
             advertisement.getAdvertisementDetail().getPeopleList(),

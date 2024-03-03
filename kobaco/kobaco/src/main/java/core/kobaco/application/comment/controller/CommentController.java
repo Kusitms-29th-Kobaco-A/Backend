@@ -13,15 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments")
 @RequiredArgsConstructor
+@RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/create")
-    public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO,
-                                                       @RequestParam Long userId) {
-        CommentDetail createdComment = commentService.createComment(commentDTO, userId);
+    public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO) {
+        CommentDetail createdComment = commentService.createComment(commentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 

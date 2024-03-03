@@ -5,7 +5,6 @@ import core.kobaco.domain.comment.*;
 
 import core.kobaco.domain.user.UserUtils;
 
-import core.kobaco.infra.jpa.user.UserEntity;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,8 @@ public class CommentService {
     private final CommentLikeManager commentLikeManager;
 
     @Transactional
-    public CommentDetail createComment(CommentDetail commentDetail, Long userId) {
+    public CommentDetail createComment(CommentDetail commentDetail) {
+        final Long userId = userUtils.getRequestUserId();
         if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자가 인증되지 않았습니다.");
         }
@@ -33,21 +33,21 @@ public class CommentService {
         Comment comment = new Comment(
                 null,
                 commentDetail.getContent(),
-                UserEntity.from(userId)
+                userId
         );
 
         Comment savedCommentEntity = commentRepository.save(comment);
         return new CommentDetail(
                 savedCommentEntity.getCommentId(),
                 savedCommentEntity.getContent(),
-                savedCommentEntity.getCommenter().getId()
+                savedCommentEntity.getCommenterId()
         );
 
     }
     public List<CommentDetail> getAllComments() {
         List<Comment> comments = commentRepository.findAll();
         return comments.stream()
-                .map(comment -> new CommentDetail(comment.getCommentId(), comment.getContent(), comment.getCommenter().getId()))
+                .map(comment -> new CommentDetail(comment.getCommentId(), comment.getContent(), comment.getCommenterId()))
                 .collect(Collectors.toList());
     }
 

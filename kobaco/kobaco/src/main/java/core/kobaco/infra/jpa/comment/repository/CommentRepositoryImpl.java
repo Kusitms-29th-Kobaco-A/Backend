@@ -5,12 +5,14 @@ import core.kobaco.domain.comment.Comment;
 import core.kobaco.domain.comment.CommentRepository;
 import core.kobaco.infra.comment.CommentJpaRepository;
 import core.kobaco.infra.jpa.comment.entity.CommentEntity;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Primary
 public class CommentRepositoryImpl implements CommentRepository {
     private final CommentJpaRepository commentJpaRepository;
     private final CommentMapper commentMapper;
@@ -28,7 +30,8 @@ public class CommentRepositoryImpl implements CommentRepository {
 
     @Override
     public Comment save(Comment comment) {
-        CommentEntity commentEntity = commentMapper.toEntity(comment);
+        // 사용자의 ID를 함께 전달
+        CommentEntity commentEntity = commentMapper.toEntity(comment, comment.getCommenterId());
         commentEntity = commentJpaRepository.save(commentEntity);
         return commentMapper.toDomain(commentEntity);
     }

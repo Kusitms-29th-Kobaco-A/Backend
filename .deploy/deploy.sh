@@ -1,15 +1,13 @@
 #! /bin/bash
 
-source .env
-
-current_application_port=$application_port
-
-echo ${current_application_port}
-
 green_application_port=0
 green_application_name="green-application"
 blue_application_name="blue-application"
 temp_application_name="deprecated-application"
+
+current_application_port=$(docker inspect --format='{{index .NetworkSettings.Ports "8080/tcp" 0 "HostPort"}}' ${blue_application_name})
+
+echo ${current_application_port}
 
 if [ "$current_application_port" -eq 8081 ]; then
         green_application_port=8082

@@ -1,72 +1,65 @@
 package core.kobaco.application.comment.service;
 
-import core.kobaco.application.comment.service.dto.CommentDTO;
-import core.kobaco.infra.comment.CommentEntity;
-import core.kobaco.infra.comment.CommentJpaRepository;
-import core.kobaco.infra.user.UserEntity;
-import core.kobaco.infra.user.UserJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import core.kobaco.application.comment.service.dto.CommentDetail;
+import core.kobaco.domain.comment.*;
+
+import core.kobaco.domain.user.UserUtils;
+
+import core.kobaco.infra.jpa.user.UserEntity;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class CommentService {
-    private final CommentJpaRepository commentRepository;
-    private final UserJpaRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final UserUtils userUtils;
+    private final CommentLikeManager commentLikeManager;
 
-    @Autowired
-    public CommentService(CommentJpaRepository commentRepository, UserJpaRepository userRepository) {
-        this.commentRepository = commentRepository;
-        this.userRepository = userRepository;
-    }
-
-    public CommentDTO createComment(String content, String userEmail) {
-        Optional<UserEntity> userOptional = userRepository.findByEmail(userEmail);
-        if (userOptional.isEmpty()) {
-            throw new IllegalArgumentException("User not found");
+    @Transactional
+    public CommentDetail createComment(CommentDetail commentDetail, Long userId) {
+        if (userId == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자가 인증되지 않았습니다.");
         }
 
-        UserEntity user = userOptional.get();
-        CommentEntity comment = CommentEntity.of(content, user);
-        commentRepository.save(comment);
-        return toDTO(comment);
-    }
+        Comment comment = new Comment(
+                null,
+                commentDetail.getContent(),
+                UserEntity.from(userId)
+        );
 
-    public List<CommentDTO> getAllComments() {
-        List<CommentEntity> comments = commentRepository.findAll();
+        Comment savedCommentEntity = commentRepository.save(comment);
+        return new CommentDetail(
+                savedCommentEntity.getCommentId(),
+                savedCommentEntity.getContent(),
+                savedCommentEntity.getCommenter().getId()
+        );
+
+    }
+    public List<CommentDetail> getAllComments() {
+        List<Comment> comments = commentRepository.findAll();
         return comments.stream()
-                .map(this::toDTO)
+                .map(comment -> new CommentDetail(comment.getCommentId(), comment.getContent(), comment.getCommenter().getId()))
                 .collect(Collectors.toList());
     }
 
-    public void likeComment(Long commentId, String userEmail) {
-        Optional<CommentEntity> commentOptional = commentRepository.findById(commentId);
-        if (commentOptional.isEmpty()) {
-            throw new IllegalArgumentException("Comment not found");
-        }
-
-        CommentEntity comment = commentOptional.get();
-        if (!comment.getLikedBy().contains(userEmail)) {
-            comment.getLikedBy().add(userEmail);
-            commentRepository.save(comment);
-        }
+    @Transactional
+    public void likeComment(Long commentId) {
+        final Long userId = userUtils.getRequestUserId();
+        commentLikeManager.like(commentId, userId);
     }
-
-    public List<CommentDTO> getCommentsByUser(String userEmail) {
-        List<CommentEntity> comments = commentRepository.findByUserEmail(userEmail);
-        return comments.stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    private CommentDTO toDTO(CommentEntity comment) {
-        CommentDTO dto = new CommentDTO();
-        dto.setId(comment.getId());
-        dto.setContent(comment.getContent());
-        dto.setUserEmail(comment.getUser().getEmail());
-        dto.setLikes(comment.getLikedBy().size());
-        return dto;
+    public CommentLikeDetailResponse getCommentLikeCount(final Long commentId) {
+        return CommentLikeDetailResponse.of(
+                commentLikeManager.isLike(commentId),
+                commentLikeManager.getLikeCount(commentId)
+        );
     }
 }

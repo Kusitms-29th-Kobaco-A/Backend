@@ -22,11 +22,9 @@ echo ${green_application_port}
 
 echo $(docker pull wendyjihyo/github-actions-kobaco)
 
-cmd=$(docker run -d -p ${green_application_port}:8080 --name ${green_application_name} --net application --env-file /home/ubuntu/.env  wendyjihyo/github-actions-kobaco)
+echo $(docker run -d -p ${green_application_port}:8080 --name ${green_application_name} --net application --env-file /home/ubuntu/.env  wendyjihyo/github-actions-kobaco)
 
 echo $(docker image prune -f)
-
-echo ${cmd}
 
 # 실행 되는지 확인 -> 확인이 health 채크가 완료되면 blue rename to deprecated-application -> green rename to blue -> nginx reload
 

@@ -61,4 +61,22 @@ public static File basicDirectory(Long parentFileId) {
     public Boolean isRootDirectory() {
         return ROOT_DIRECTORY_NAME.equals(this.fileName);
     }
+
+    public Boolean isBasicDirectory() {
+        return BASIC_DIRECTORY_NAME.equals(this.fileName);
+    }
+
+    public Boolean isCaptureDirectory() {
+        return CAPTURE_DIRECTORY_NAME.equals(this.fileName);
+    }
+
+    public Boolean isModifiable() {
+        return !isRootDirectory() && !isBasicDirectory() && !isCaptureDirectory();
+    }
+
+
+
+    public void move(File targetDirectory) {
+        this.parentFileId = targetDirectory.getFileId();
+    }
 }

@@ -3,6 +3,7 @@ package core.kobaco.application.file.service;
 import core.kobaco.application.file.service.dto.DirectoryCreateRequest;
 import core.kobaco.application.file.service.dto.DirectoryDetailResponse;
 import core.kobaco.application.file.service.dto.DirectoryUpdateRequest;
+import core.kobaco.application.file.service.dto.FileMoveRequest;
 import core.kobaco.domain.file.File;
 import core.kobaco.domain.file.service.*;
 import core.kobaco.domain.user.UserUtils;
@@ -44,5 +45,15 @@ public class FileService {
     @Transactional
     public void updateDirectoryName(Long directoryId, DirectoryUpdateRequest request) {
         fileModifier.updateDirectory(directoryId, request.directoryName());
+    }
+
+    @Transactional
+    public void moveDirectory(Long directoryId, FileMoveRequest request) {
+        fileModifier.moveDirectory(directoryId, request.targetDirectoryId());
+    }
+
+    @Transactional
+    public void deleteDirectory(Long directoryId) {
+        fileModifier.deleteDirectory(directoryId);
     }
 }

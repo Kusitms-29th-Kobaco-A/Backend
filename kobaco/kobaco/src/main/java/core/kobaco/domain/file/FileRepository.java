@@ -19,4 +19,6 @@ public interface FileRepository {
     Optional<File> findByFileId(Long directoryId);
 
     void update(File file);
+
+    void delete(File directory);
 }

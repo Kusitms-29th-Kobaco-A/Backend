@@ -62,4 +62,9 @@ public class FileRepositoryImpl implements FileRepository {
     public void update(File file) {
         fileJpaRepository.save(fileMapper.toEntity(file));
     }
+
+    @Override
+    public void delete(File directory) {
+        fileJpaRepository.delete(fileMapper.toEntity(directory));
+    }
 }

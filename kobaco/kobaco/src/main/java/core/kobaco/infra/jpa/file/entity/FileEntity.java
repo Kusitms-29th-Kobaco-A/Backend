@@ -5,11 +5,15 @@ import core.kobaco.infra.jpa.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "file")
 @Getter
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE file SET is_deleted = true WHERE file_id = ?")
+@SQLRestriction("is_deleted = false")
 public class FileEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +33,15 @@ public class FileEntity extends BaseEntity {
     @JoinColumn(name = "namespace_id")
     private NamespaceEntity namespace;
 
+    private Boolean isDeleted;
+
     private FileEntity(Long id, String fileName, FileType fileType, FileEntity parentFile, NamespaceEntity namespace) {
         this.id = id;
         this.fileName = fileName;
         this.fileType = fileType;
         this.parentFile = parentFile;
         this.namespace = namespace;
+        this.isDeleted = false;
     }
 
     public static FileEntity of(

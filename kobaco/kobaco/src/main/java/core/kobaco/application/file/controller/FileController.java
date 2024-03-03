@@ -4,6 +4,7 @@ import core.kobaco.application.file.service.FileService;
 import core.kobaco.application.file.service.dto.DirectoryCreateRequest;
 import core.kobaco.application.file.service.dto.DirectoryDetailResponse;
 import core.kobaco.application.file.service.dto.DirectoryUpdateRequest;
+import core.kobaco.application.file.service.dto.FileMoveRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +51,20 @@ public class FileController {
         @PathVariable Long directoryId,
         @RequestBody DirectoryUpdateRequest request) {
         fileService.updateDirectoryName(directoryId, request);
+    }
+
+    @Operation(summary = "디렉토리 이동")
+    @PatchMapping("/{directoryId}/move")
+    public void moveDirectory(
+        @PathVariable Long directoryId,
+        @RequestBody FileMoveRequest request) {
+        fileService.moveDirectory(directoryId, request);
+    }
+
+    @Operation(summary = "디렉토리 삭제")
+    @DeleteMapping("/{directoryId}")
+    public void deleteDirectory(@PathVariable Long directoryId) {
+        fileService.deleteDirectory(directoryId);
     }
 
 }

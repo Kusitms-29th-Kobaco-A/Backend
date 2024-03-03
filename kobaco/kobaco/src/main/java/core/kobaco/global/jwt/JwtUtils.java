@@ -25,4 +25,13 @@ public class JwtUtils {
     public Long getRequestUserId(){
         return parseUserClaims().getUserId();
     }
+
+    public Boolean isLogin(){
+        try{
+            parseUserClaims();
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
 }

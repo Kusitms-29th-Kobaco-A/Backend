@@ -1,15 +1,13 @@
 #! /bin/bash
 
-source .env
-
-current_application_port=$application_port
-
-echo ${current_application_port}
-
 green_application_port=0
 green_application_name="green-application"
 blue_application_name="blue-application"
 temp_application_name="deprecated-application"
+
+current_application_port=$(docker inspect --format='{{index .NetworkSettings.Ports "8080/tcp" 0 "HostPort"}}' ${blue_application_name})
+
+echo ${current_application_port}
 
 if [ "$current_application_port" -eq 8081 ]; then
         green_application_port=8082
@@ -22,11 +20,9 @@ echo ${green_application_port}
 
 echo $(docker pull wendyjihyo/github-actions-kobaco)
 
-cmd=$(docker run -d -p ${green_application_port}:8080 --name ${green_application_name} --net application --env-file /home/ubuntu/.env  wendyjihyo/github-actions-kobaco)
+echo $(docker run -d -p ${green_application_port}:8080 --name ${green_application_name} --net application --env-file /home/ubuntu/.env  wendyjihyo/github-actions-kobaco)
 
 echo $(docker image prune -f)
-
-echo ${cmd}
 
 # 실행 되는지 확인 -> 확인이 health 채크가 완료되면 blue rename to deprecated-application -> green rename to blue -> nginx reload
 

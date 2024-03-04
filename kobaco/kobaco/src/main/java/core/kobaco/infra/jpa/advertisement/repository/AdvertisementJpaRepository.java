@@ -12,7 +12,7 @@ import java.util.List;
 public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementEntity, Long> {
 
     @Query("""
-                select ae
+                select distinct ae
                 from AdvertisementEntity ae
                 join AdvertiseSaveEntity ase on ae.id = ase.advertisement.id
                 where ase.file.id in (
@@ -25,7 +25,7 @@ public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementE
     Page<AdvertisementEntity> findSavedAllByUserId(Pageable pageable, @Param("userId") Long userId);
 
     @Query("""
-        select ae
+        select distinct ae
         from AdvertisementEntity ae
         join AdvertisementKeywordEntity ak on ak.advertisement=ae and ak.keyword in (
         select ke
@@ -34,4 +34,34 @@ public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementE
         )
         """)
     Page<AdvertisementEntity> findAllWithKeyword(Pageable pageable, List<String> keywordList);
+
+
+    @Query("""
+        select distinct ae
+        from AdvertisementEntity ae
+        join AdvertisementKeywordEntity ak on ak.advertisement=ae and ak.keyword in (
+            select ke
+            from KeywordEntity ke
+            join AdvertisementKeywordEntity ake on ake.keyword=ke and ake.advertisement.id = :advertiseId
+        )
+        where ae.id != :advertiseId
+""")
+    Page<AdvertisementEntity> findAllWithKeywordByAdvertiseId(Pageable pageable, Long advertiseId);
+
+
+    @Query("""
+        select distinct ae
+        from AdvertisementEntity ae
+        where ae.makerCompany = :makerCompany and ae.id != :advertiseId
+        and ae.id not in(
+            select ake.advertisement.id
+            from AdvertisementKeywordEntity ake
+            where ake.keyword in (
+                select ke
+                from KeywordEntity ke
+                join AdvertisementKeywordEntity ake on ake.keyword=ke and ake.advertisement.id = :advertiseId
+            )
+       )
+        """)
+    Page<AdvertisementEntity> findAllByMakerCompanyAndAdvertiseId(Pageable pageable, String makerCompany, Long advertiseId);
 }

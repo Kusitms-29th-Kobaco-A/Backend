@@ -46,8 +46,19 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
             return advertisementJpaRepository.findAll(pageable)
                 .map(advertiseMapper::toDomain);
         }
-        keywordList.forEach(System.out::println);
         return advertisementJpaRepository.findAllWithKeyword(pageable, keywordList)
+            .map(advertiseMapper::toDomain);
+    }
+
+    @Override
+    public Page<Advertisement> findAllWithKeywordByAdvertiseId(Pageable pageable, Long advertiseId) {
+        return advertisementJpaRepository.findAllWithKeywordByAdvertiseId(pageable, advertiseId)
+            .map(advertiseMapper::toDomain);
+    }
+
+    @Override
+    public Page<Advertisement> findAllByMakerCompanyAndAdvertiseId(Pageable pageable, String makerCompany, Long advertiseId) {
+        return advertisementJpaRepository.findAllByMakerCompanyAndAdvertiseId(pageable, makerCompany, advertiseId)
             .map(advertiseMapper::toDomain);
     }
 }

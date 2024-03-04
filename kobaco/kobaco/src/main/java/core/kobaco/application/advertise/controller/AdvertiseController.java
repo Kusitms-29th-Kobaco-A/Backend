@@ -75,16 +75,23 @@ public class AdvertiseController {
         return advertiseService.getLikeAdvertiseList(pageable);
     }
 
+    @Operation(summary = "트랜드 광고 조회")
     @GetMapping("/trends")
     public Page<AdvertiseSimpleResponse> getTrendAdvertises(Pageable pageable){
         return advertiseService.getTrendAdvertiseList(pageable);
     }
 
+    @Operation(summary = "트랜드 광고 만들기", description = """
+        특정 광고를 요청 보내면 해당 광고를 트랜드 광고로 만듭니다.""")
     @PostMapping("/{advertiseId}/trends")
     public void trendAdvertise(@PathVariable Long advertiseId){
         advertiseService.trendAdvertise(advertiseId);
     }
 
+    @Operation(summary = "광고 추천", description = """
+       키워드가 하나라도 일치하는 광고를 추천합니다.
+        만약 추천된 광고가 없다면, 광고의 제작사와 동일한 광고를 추천합니다. 
+       """)
     @GetMapping("/{advertiseId}/recommend")
     public Page<AdvertiseSimpleResponse> getRecommendAdvertises(@PathVariable Long advertiseId, Pageable pageable){
         return advertiseService.getRecommendAdvertiseList(pageable, advertiseId);

@@ -14,13 +14,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/comments")
+@RequestMapping("/api/comments")
 public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/create")
-    public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO) {
-        CommentDetail createdComment = commentService.createComment(commentDTO);
+    public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO, @RequestParam Long advertiseId) {
+        CommentDetail createdComment = commentService.createComment(commentDTO, advertiseId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 

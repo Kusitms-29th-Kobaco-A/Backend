@@ -8,9 +8,13 @@ public class Comment {
     private Long commentId;
     private String content;
     private Long commenterId;
+    private Long advertiseId;
 
-    public static Comment of (Long commentId, String content, Long commenterId) {
-        return new Comment(commentId, content, commenterId);
+    public Comment(Long commentId, String content, Long commenterId) {
+        this.commentId = commentId;
+        this.content = content;
+        this.commenterId = commenterId;
+        this.advertiseId = null;
     }
 
 }

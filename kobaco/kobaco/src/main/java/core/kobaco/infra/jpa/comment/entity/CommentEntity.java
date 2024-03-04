@@ -20,14 +20,20 @@ public class CommentEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    private CommentEntity(String content, UserEntity user) {
+    @Column(name = "advertise_id")
+    private Long advertiseId;
+
+    private CommentEntity(String content, UserEntity user, Long advertiseId) {
         this.content = content;
         this.user = user;
+        this.advertiseId = advertiseId;
     }
-    public static CommentEntity of(String content, UserEntity user){
-        return new CommentEntity(content, user);
+
+    public static CommentEntity of(String content, UserEntity user, Long advertiseId) {
+        return new CommentEntity(content, user, advertiseId);
     }
-    public static CommentEntity from(Long id){
-        return new CommentEntity(null, null);
+
+    public static CommentEntity from(Long id) {
+        return new CommentEntity(null, null, null);
     }
 }

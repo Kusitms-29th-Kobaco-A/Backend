@@ -24,7 +24,7 @@ public class CommentService {
     private final CommentLikeManager commentLikeManager;
 
     @Transactional
-    public CommentDetail createComment(CommentDetail commentDetail) {
+    public CommentDetail createComment(CommentDetail commentDetail, Long advertiseId) {
         final Long userId = userUtils.getRequestUserId();
         if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자가 인증되지 않았습니다.");
@@ -33,10 +33,11 @@ public class CommentService {
         Comment comment = new Comment(
                 null,
                 commentDetail.getContent(),
-                userId
+                userId,
+                advertiseId
         );
 
-        Comment savedCommentEntity = commentRepository.save(comment);
+        Comment savedCommentEntity = commentRepository.save(comment, advertiseId);
         return new CommentDetail(
                 savedCommentEntity.getCommentId(),
                 savedCommentEntity.getContent(),

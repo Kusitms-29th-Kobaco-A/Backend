@@ -13,10 +13,9 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class CommentMapper {
-    public CommentEntity toEntity(Comment comment, Long userId) {
+    public CommentEntity toEntity(Comment comment, Long userId, Long advertiseId) {
         UserEntity userEntity = UserEntity.from(userId);
-        return CommentEntity.of(comment.getContent(), userEntity);
-
+        return CommentEntity.of(comment.getContent(), userEntity, advertiseId);
     }
 
     public Comment toDomain(CommentEntity commentEntity) {
@@ -25,6 +24,7 @@ public class CommentMapper {
                 commentEntity.getContent(),
                 commentEntity.getUser().getId()
         );
+
     }
 
     public List<Comment> toDomainList(List<CommentEntity> commentEntities) {

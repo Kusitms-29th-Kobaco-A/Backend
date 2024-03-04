@@ -27,7 +27,7 @@ public class CaptureFormatter implements FileDetailFormatter {
             advertisement.getTitle(),
             advertiseCapture.getImageUrl(),
             null,
-            advertisement.getAdvertiseId(),
+            advertisement.getId(),
             FileType.IMAGE
         );
     }

@@ -14,7 +14,7 @@ public record AdvertiseSimpleResponse (
 ){
     public static AdvertiseSimpleResponse of(Advertisement advertisement, List<String> keywordList){
         return new AdvertiseSimpleResponse(
-            advertisement.getAdvertiseId(),
+            advertisement.getId(),
             advertisement.getVideoUrl(),
             advertisement.getTitle(),
             advertisement.getVideoTime(),

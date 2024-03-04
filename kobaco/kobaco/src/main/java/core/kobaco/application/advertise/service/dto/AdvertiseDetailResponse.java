@@ -22,7 +22,7 @@ public record AdvertiseDetailResponse(
 
     public static AdvertiseDetailResponse of(Advertisement advertisement, List<String> keywordList){
         return new AdvertiseDetailResponse(
-            advertisement.getAdvertiseId(),
+            advertisement.getId(),
             advertisement.getVideoUrl(),
             advertisement.getTitle(),
             advertisement.getUploadDate(),

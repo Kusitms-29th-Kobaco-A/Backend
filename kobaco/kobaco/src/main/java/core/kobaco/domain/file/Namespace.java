@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Namespace {
-    private Long namespaceId;
+    private Long id;
     private Long userId;
 
     public static Namespace from(Long userId) {

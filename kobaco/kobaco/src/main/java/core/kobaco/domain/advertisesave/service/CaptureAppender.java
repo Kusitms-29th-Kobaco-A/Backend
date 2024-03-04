@@ -17,7 +17,7 @@ public class CaptureAppender {
     private final FileReader fileReader;
 
     public void append(File directory, Long advertiseId,String imageUrl) {
-        final File imageFile = fileRepository.save(File.of(FileType.IMAGE, directory.getFileId(), directory.getNamespaceId()));
-        advertiseCaptureRepository.save(AdvertiseCapture.of(imageUrl, imageFile.getFileId(), advertiseId));
+        final File imageFile = fileRepository.save(File.of(FileType.IMAGE, directory.getId(), directory.getNamespaceId()));
+        advertiseCaptureRepository.save(AdvertiseCapture.of(imageUrl, imageFile.getId(), advertiseId));
     }
 }

@@ -20,11 +20,11 @@ public class FileFactory {
 
     public File createRootDirectory(final Long userId) {
         Namespace namespace = upsert(userId);
-        return fileRepository.findRootDirectoryByNamespaceId(namespace.getNamespaceId())
+        return fileRepository.findRootDirectoryByNamespaceId(namespace.getId())
             .orElseGet(() -> {
-                    final File rootDirectory = fileRepository.save(File.rootDirectory(namespace.getNamespaceId()));
+                    final File rootDirectory = fileRepository.save(File.rootDirectory(namespace.getId()));
 //                    fileRepository.save(File.captureDirectory(rootDirectory.getFileId()));
-                    fileRepository.save(File.basicDirectory(rootDirectory.getFileId(), namespace.getNamespaceId()));
+                    fileRepository.save(File.basicDirectory(rootDirectory.getId(), namespace.getId()));
                     return rootDirectory;
                 }
             );
@@ -35,14 +35,14 @@ public class FileFactory {
         return fileRepository.findByFileName(advertiseTitle)
             .orElseGet(() -> {
                 final File captureDirectory = fileReader.getCaptureDirectoryByUserId(userId);
-                return fileRepository.save(File.of(advertiseTitle, FileType.DIRECTORY, captureDirectory.getFileId()));
+                return fileRepository.save(File.of(advertiseTitle, FileType.DIRECTORY, captureDirectory.getId()));
             });
     }
 
     public File createBasicDirectory(final Long userId) {
         final File rootDirectory = createRootDirectory(userId);
         return fileRepository.findBasicDirectoryByUserId(userId)
-            .orElseGet(() -> fileRepository.save(File.basicDirectory(rootDirectory.getFileId(), rootDirectory.getNamespaceId())));
+            .orElseGet(() -> fileRepository.save(File.basicDirectory(rootDirectory.getId(), rootDirectory.getNamespaceId())));
     }
 
 

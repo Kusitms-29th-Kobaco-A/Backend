@@ -74,4 +74,20 @@ public class AdvertiseController {
     public Page<AdvertiseSimpleResponse> getLikeAdvertises(Pageable pageable){
         return advertiseService.getLikeAdvertiseList(pageable);
     }
+
+    @GetMapping("/trends")
+    public Page<AdvertiseSimpleResponse> getTrendAdvertises(Pageable pageable){
+        return advertiseService.getTrendAdvertiseList(pageable);
+    }
+
+    @PostMapping("/{advertiseId}/trends")
+    public void trendAdvertise(@PathVariable Long advertiseId){
+        advertiseService.trendAdvertise(advertiseId);
+    }
+
+    @GetMapping("/{advertiseId}/recommend")
+    public Page<AdvertiseSimpleResponse> getRecommendAdvertises(@PathVariable Long advertiseId, Pageable pageable){
+        return advertiseService.getRecommendAdvertiseList(pageable, advertiseId);
+    }
+
 }

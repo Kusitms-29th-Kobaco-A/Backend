@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdvertisementKeyword {
-    private Long advertiseKeywordId;
+    private Long id;
     private Long advertiseId;
     private Long keywordId;
 

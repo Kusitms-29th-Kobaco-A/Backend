@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Keyword {
-    private Long keywordId;
+    private Long id;
     private String keyword;
 
     public static Keyword of(Long keywordId, String keyword) {

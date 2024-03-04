@@ -1,9 +1,12 @@
 package core.kobaco.domain.file;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.util.Assert;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class File {
     private static final String ROOT_DIRECTORY_NAME = "root";
     private static final String CAPTURE_DIRECTORY_NAME = "capture";
@@ -14,14 +17,6 @@ public class File {
     private FileType fileType;
     private Long parentFileId;
     private Long namespaceId;
-
-    private File(Long fileId, String fileName, FileType fileType, Long parentFileId, Long namespaceId) {
-        this.fileId = fileId;
-        this.fileName = fileName;
-        this.fileType = fileType;
-        this.parentFileId = parentFileId;
-        this.namespaceId = namespaceId;
-    }
 
     public static File of(
         Long fileId,

@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -35,6 +37,17 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
     @Override
     public Page<Advertisement> findSavedAllByUserId(Pageable pageable, Long userId) {
         return advertisementJpaRepository.findSavedAllByUserId(pageable, userId)
+            .map(advertiseMapper::toDomain);
+    }
+
+    @Override
+    public Page<Advertisement> findAllWithKeyword(Pageable pageable, List<String> keywordList) {
+        if(Objects.isNull(keywordList)||keywordList.isEmpty()){
+            return advertisementJpaRepository.findAll(pageable)
+                .map(advertiseMapper::toDomain);
+        }
+        keywordList.forEach(System.out::println);
+        return advertisementJpaRepository.findAllWithKeyword(pageable, keywordList)
             .map(advertiseMapper::toDomain);
     }
 }

@@ -12,13 +12,13 @@ public record AdvertiseSimpleResponse (
     Time videoTime,
     List<String> keywordList
 ){
-    public static AdvertiseSimpleResponse of(Advertisement advertisement){
+    public static AdvertiseSimpleResponse of(Advertisement advertisement, List<String> keywordList){
         return new AdvertiseSimpleResponse(
             advertisement.getAdvertiseId(),
             advertisement.getVideoUrl(),
             advertisement.getTitle(),
             advertisement.getVideoTime(),
-            List.of("키워드1", "키워드2")
+            keywordList
         );
     }
 }

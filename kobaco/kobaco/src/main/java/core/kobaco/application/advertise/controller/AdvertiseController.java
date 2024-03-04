@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/advertises")
@@ -25,10 +27,18 @@ public class AdvertiseController {
         advertiseService.createAdvertise(request);
     }
 
-    @Operation(summary = "광고 목록 조회")
+    @Operation(summary = "광고 목록 조회", description = """
+        query param을 통해서 검색어를 전달받아 검색어에 해당하는 광고 목록을 조회합니다.
+        컨셉, 상업군 상관없이 keywordList에 전달하면 됩니다.
+        """)
     @GetMapping
-    public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable) {
-        return advertiseService.getAdvertiseList(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("id").descending()));
+    public Page<AdvertiseSimpleResponse> getAdvertiseList(
+        Pageable pageable,
+        @RequestParam(required = false) List<String> keywordList) {
+        return advertiseService.getAdvertiseList(
+            PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("id").descending()),
+            keywordList
+        );
     }
 
     @Operation(summary = "광고 상세 조회")

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementEntity, Long> {
 
     @Query("""
@@ -21,4 +23,15 @@ public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementE
                 order by ase.id desc
         """)
     Page<AdvertisementEntity> findSavedAllByUserId(Pageable pageable, @Param("userId") Long userId);
+
+    @Query("""
+        select ae
+        from AdvertisementEntity ae
+        join AdvertisementKeywordEntity ak on ak.advertisement=ae and ak.keyword in (
+        select ke
+        from KeywordEntity ke
+        where ke.description in :keywordList
+        )
+        """)
+    Page<AdvertisementEntity> findAllWithKeyword(Pageable pageable, List<String> keywordList);
 }

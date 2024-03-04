@@ -5,6 +5,8 @@ import core.kobaco.domain.keyword.KeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class KeywordReader {
@@ -13,6 +15,10 @@ public class KeywordReader {
     public Keyword getKeyword(Long keywordId) {
         return keywordRepository.findById(keywordId)
             .orElseThrow(() -> new IllegalArgumentException("Invalid keywordId"));
+    }
+
+    public List<Keyword> getKeywordList(List<Long> keywordIdList) {
+        return keywordRepository.findAllById(keywordIdList);
     }
 
 }

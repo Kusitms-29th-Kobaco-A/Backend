@@ -6,13 +6,13 @@ import core.kobaco.domain.file.FileType;
 public record DirectoryCreateRequest(
     String directoryName
 ) {
-    public File toDomain(final Long parentDirectoryId){
+    public File toDomain(final Long parentDirectoryId, Long namespaceId){
         return File.of(
             null,
             directoryName,
             FileType.DIRECTORY,
             parentDirectoryId,
-            null
+            namespaceId
         );
     }
 }

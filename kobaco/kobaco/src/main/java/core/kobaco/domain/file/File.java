@@ -41,12 +41,16 @@ public class File {
         return new File(null, CAPTURE_DIRECTORY_NAME, FileType.CAPTURE_DIRECTORY, parentFileId, null);
     }
 
-public static File basicDirectory(Long parentFileId) {
-        return new File(null, BASIC_DIRECTORY_NAME, FileType.BASIC_DIRECTORY, parentFileId, null);
+public static File basicDirectory(Long parentFileId, Long namespaceId) {
+        return new File(null, BASIC_DIRECTORY_NAME, FileType.BASIC_DIRECTORY, parentFileId, namespaceId);
     }
 
     public static File of(String fileName, FileType fileType, Long parentFileId) {
         return new File(null, fileName, fileType, parentFileId, null);
+    }
+
+    public static File of(FileType fileType, Long parentFileId, Long namespaceId) {
+        return new File(null, null, fileType, parentFileId, namespaceId);
     }
 
     public static File of(FileType fileType, Long parentFileId) {

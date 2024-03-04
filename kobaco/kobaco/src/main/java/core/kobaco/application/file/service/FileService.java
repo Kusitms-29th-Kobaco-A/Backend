@@ -5,6 +5,7 @@ import core.kobaco.application.file.service.dto.DirectoryDetailResponse;
 import core.kobaco.application.file.service.dto.DirectoryUpdateRequest;
 import core.kobaco.application.file.service.dto.FileMoveRequest;
 import core.kobaco.domain.file.File;
+import core.kobaco.domain.file.Namespace;
 import core.kobaco.domain.file.service.*;
 import core.kobaco.domain.user.UserUtils;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,8 @@ public class FileService {
 
     @Transactional
     public void createDirectory(Long parentDirectoryId, DirectoryCreateRequest request) {
-        fileAppender.append(request.toDomain(parentDirectoryId));
+        final Namespace namespace = fileReader.getNamespaceByUserId(userUtils.getRequestUserId());
+        fileAppender.append(request.toDomain(parentDirectoryId, namespace.getNamespaceId()));
     }
 
     @Transactional

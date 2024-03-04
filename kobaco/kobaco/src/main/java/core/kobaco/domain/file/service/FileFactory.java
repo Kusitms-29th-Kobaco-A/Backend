@@ -24,7 +24,7 @@ public class FileFactory {
             .orElseGet(() -> {
                     final File rootDirectory = fileRepository.save(File.rootDirectory(namespace.getNamespaceId()));
 //                    fileRepository.save(File.captureDirectory(rootDirectory.getFileId()));
-                    fileRepository.save(File.basicDirectory(rootDirectory.getFileId()));
+                    fileRepository.save(File.basicDirectory(rootDirectory.getFileId(), namespace.getNamespaceId()));
                     return rootDirectory;
                 }
             );
@@ -42,7 +42,7 @@ public class FileFactory {
     public File createBasicDirectory(final Long userId) {
         final File rootDirectory = createRootDirectory(userId);
         return fileRepository.findBasicDirectoryByUserId(userId)
-            .orElseGet(() -> fileRepository.save(File.basicDirectory(rootDirectory.getFileId())));
+            .orElseGet(() -> fileRepository.save(File.basicDirectory(rootDirectory.getFileId(), rootDirectory.getNamespaceId())));
     }
 
 

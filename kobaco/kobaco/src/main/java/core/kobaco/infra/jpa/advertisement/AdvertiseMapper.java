@@ -15,6 +15,7 @@ public class AdvertiseMapper {
         return AdvertisementEntity.of(
             advertisement.getAdvertiseId(),
             advertisement.getVideoUrl(),
+            advertisement.getVideoTime(),
             advertisement.getTitle(),
             advertisement.getUploadDate(),
             advertisement.getCopy(),
@@ -31,6 +32,7 @@ public class AdvertiseMapper {
         return Advertisement.of(
             advertisementEntity.getId(),
             advertisementEntity.getVideoUrl(),
+            advertisementEntity.getVideoTime(),
             advertisementEntity.getTitle(),
             advertisementEntity.getUploadDate(),
             advertisementEntity.getCopy(),

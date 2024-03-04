@@ -8,12 +8,11 @@ import core.kobaco.application.advertise.service.dto.AdvertiseSimpleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -28,19 +27,18 @@ public class AdvertiseController {
         advertiseService.createAdvertise(request);
     }
 
-    @Operation(summary = "광고 목록 조회")
+    @Operation(summary = "광고 목록 조회", description = """
+        query param을 통해서 검색어를 전달받아 검색어에 해당하는 광고 목록을 조회합니다.
+        컨셉, 상업군 상관없이 keywordList에 전달하면 됩니다.
+        """)
     @GetMapping
-    public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable) {
-        List<AdvertiseSimpleResponse> advertiseList = List.of(
-            new AdvertiseSimpleResponse(
-                1L,
-                "광고 이미지 URL",
-                "광고 제목",
-                Time.valueOf(LocalTime.of(0, 4,23)),
-                List.of("광고 태그1", "광고 태그2")
-            )
+    public Page<AdvertiseSimpleResponse> getAdvertiseList(
+        Pageable pageable,
+        @RequestParam(required = false) List<String> keywordList) {
+        return advertiseService.getAdvertiseList(
+            PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("id").descending()),
+            keywordList
         );
-        return new PageImpl<>(advertiseList, pageable, advertiseList.size());
     }
 
     @Operation(summary = "광고 상세 조회")
@@ -61,5 +59,18 @@ public class AdvertiseController {
     @GetMapping("/{advertiseId}/like")
     public AdvertiseLikeDetailResponse getAdvertiseLikeCount(@PathVariable Long advertiseId) {
         return advertiseService.getAdvertiseLikeCount(advertiseId);
+    }
+
+
+    @Operation(summary = "내가 찜한 영상")
+    @GetMapping("/saves")
+    public Page<AdvertiseSimpleResponse> getSaveAdvertises(Pageable pageable){
+        return advertiseService.getSaveAdvertiseList(pageable);
+    }
+
+    @Operation(summary = "인기 급상승 영상 조회")
+    @GetMapping("/likes")
+    public Page<AdvertiseSimpleResponse> getLikeAdvertises(Pageable pageable){
+        return advertiseService.getLikeAdvertiseList(pageable);
     }
 }

@@ -4,6 +4,7 @@ import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementKeyword;
 import core.kobaco.domain.advertise.AdvertisementKeywordRepository;
 import core.kobaco.domain.advertise.AdvertisementRepository;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +27,12 @@ public class AdvertiseReader {
         return advertisementKeywordRepository.findAllByAdvertiseId(advertiseId);
     }
 
-    public Page<Advertisement> getAllAdvertiseList(Pageable pageable) {
-        return advertisementRepository.findAll(pageable);
+    public Page<Advertisement> getAllAdvertiseList(Pageable pageable, @Nullable List<String> keywordList) {
+//        return advertisementRepository.findAll(pageable);
+        return advertisementRepository.findAllWithKeyword(pageable, keywordList);
     }
 
+    public Page<Advertisement> getSaveAdvertiseList(Long requestUserId, Pageable pageable) {
+        return advertisementRepository.findSavedAllByUserId(pageable, requestUserId);
+    }
 }

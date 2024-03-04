@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class AdvertisementEntity extends BaseEntity {
     private String videoUrl;
     private String title;
     private LocalDate uploadDate;
+    private Time videoTime;
     private String copy;
     private String copyDetail;
     @JdbcTypeCode(SqlTypes.JSON)
@@ -36,7 +38,7 @@ public class AdvertisementEntity extends BaseEntity {
     private AdvertisementEntity(Long id,
                                 String videoUrl,
                                 String title,
-                                LocalDate uploadDate,
+                                LocalDate uploadDate, Time videoTime,
                                 String copy,
                                 String copyDetail,
                                 List<String> peopleList,
@@ -48,6 +50,7 @@ public class AdvertisementEntity extends BaseEntity {
         this.videoUrl = videoUrl;
         this.title = title;
         this.uploadDate = uploadDate;
+        this.videoTime = videoTime;
         this.copy = copy;
         this.copyDetail = copyDetail;
         this.peopleList = peopleList;
@@ -60,6 +63,7 @@ public class AdvertisementEntity extends BaseEntity {
     public static AdvertisementEntity of(
         Long id,
         String videoUrl,
+        Time videoTime,
         String title,
         LocalDate uploadDate,
         String copy,
@@ -69,11 +73,11 @@ public class AdvertisementEntity extends BaseEntity {
         String owner,
         String ownerCompany,
         String makerCompany) {
-        return new AdvertisementEntity(id, videoUrl, title, uploadDate, copy, copyDetail, peopleList, objectList, owner, ownerCompany, makerCompany);
+        return new AdvertisementEntity(id, videoUrl, title, uploadDate, videoTime, copy, copyDetail, peopleList, objectList, owner, ownerCompany, makerCompany);
     }
 
     public static AdvertisementEntity from(Long id){
-        return new AdvertisementEntity(id, null, null, null, null, null, null, null, null, null, null);
+        return new AdvertisementEntity(id, null, null, null, null, null, null, null, null, null, null, null);
     }
 }
 

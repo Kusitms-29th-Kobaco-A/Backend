@@ -3,8 +3,10 @@ package core.kobaco.infra.jpa.like;
 import core.kobaco.domain.like.AdvertiseLike;
 import core.kobaco.domain.like.AdvertiseLikeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -36,6 +38,11 @@ public class AdvertiseLikeRepositoryImpl implements AdvertiseLikeRepository {
     @Override
     public Optional<AdvertiseLike> findByAdvertisementIdAndUserId(Long advertiseId, Long userId) {
         return advertiseLikeJpaRepository.findByAdvertisementIdAndUserId(advertiseId, userId).map(likeMapper::toDomain);
+    }
+
+    @Override
+    public List<Long> findTopLankAdvertiseId(Pageable pageable) {
+        return advertiseLikeJpaRepository.findTopLankAdvertiseId(pageable);
     }
 
 }

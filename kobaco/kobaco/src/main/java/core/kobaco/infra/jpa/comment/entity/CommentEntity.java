@@ -1,5 +1,7 @@
 package core.kobaco.infra.jpa.comment.entity;
 
+import core.kobaco.domain.advertise.Advertisement;
+import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
 import core.kobaco.infra.jpa.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,17 +22,18 @@ public class CommentEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @Column(name = "advertise_id")
-    private Long advertiseId;
+    @ManyToOne
+    @JoinColumn(name = "advertise_id", nullable = false)
+    private AdvertisementEntity advertise;
 
-    private CommentEntity(String content, UserEntity user, Long advertiseId) {
+    private CommentEntity(String content, UserEntity user, AdvertisementEntity advertise) {
         this.content = content;
         this.user = user;
-        this.advertiseId = advertiseId;
+        this.advertise = advertise;
     }
 
-    public static CommentEntity of(String content, UserEntity user, Long advertiseId) {
-        return new CommentEntity(content, user, advertiseId);
+    public static CommentEntity of(String content, UserEntity user, AdvertisementEntity advertise) {
+        return new CommentEntity(content, user, advertise);
     }
 
     public static CommentEntity from(Long id) {

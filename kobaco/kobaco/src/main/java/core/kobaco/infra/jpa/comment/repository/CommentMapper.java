@@ -2,6 +2,7 @@ package core.kobaco.infra.jpa.comment.repository;
 
 import core.kobaco.domain.comment.Comment;
 
+import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
 import core.kobaco.infra.jpa.comment.entity.CommentEntity;
 import core.kobaco.infra.jpa.user.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +16,15 @@ import java.util.stream.Collectors;
 public class CommentMapper {
     public CommentEntity toEntity(Comment comment, Long userId, Long advertiseId) {
         UserEntity userEntity = UserEntity.from(userId);
-        return CommentEntity.of(comment.getContent(), userEntity, advertiseId);
+        AdvertisementEntity advertisementEntity = AdvertisementEntity.from(advertiseId);
+        return CommentEntity.of(comment.getContent(), userEntity, advertisementEntity);
     }
-
     public Comment toDomain(CommentEntity commentEntity) {
         return new Comment(
                 commentEntity.getId(),
                 commentEntity.getContent(),
                 commentEntity.getUser().getId()
         );
-
     }
 
     public List<Comment> toDomainList(List<CommentEntity> commentEntities) {

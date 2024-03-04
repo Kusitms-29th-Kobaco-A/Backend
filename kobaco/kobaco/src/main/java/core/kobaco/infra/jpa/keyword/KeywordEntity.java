@@ -2,12 +2,15 @@ package core.kobaco.infra.jpa.keyword;
 
 import core.kobaco.infra.jpa.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "keyword")
 public class KeywordEntity extends BaseEntity {
     @Id
@@ -15,10 +18,7 @@ public class KeywordEntity extends BaseEntity {
     private Long keywordId;
 
     private String description;
-    private KeywordEntity(Long keywordId, String description) {
-        this.keywordId = keywordId;
-        this.description = description;
-    }
+
     public static KeywordEntity of(Long keywordId, String description) {
         return new KeywordEntity(null,description);
     }

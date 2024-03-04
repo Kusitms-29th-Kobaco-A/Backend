@@ -3,6 +3,7 @@ package core.kobaco.infra.jpa.user;
 import core.kobaco.infra.jpa.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserEntity extends BaseEntity {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,11 +19,6 @@ public class UserEntity extends BaseEntity {
     private String email;
     private String password;
 
-    private UserEntity(Long id, String email, String password) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-    }
 
     public static UserEntity of(String email, String password) {
         return new UserEntity(null, email, password);

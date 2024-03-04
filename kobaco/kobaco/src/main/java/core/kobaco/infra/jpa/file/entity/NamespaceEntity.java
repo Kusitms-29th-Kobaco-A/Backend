@@ -4,6 +4,7 @@ import core.kobaco.infra.jpa.BaseEntity;
 import core.kobaco.infra.jpa.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "namespace")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NamespaceEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +22,6 @@ public class NamespaceEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
-
-    private NamespaceEntity(Long id, UserEntity user) {
-        this.id = id;
-        this.user = user;
-    }
 
     public static NamespaceEntity of(Long namespaceId, UserEntity user) {
         return new NamespaceEntity(namespaceId, user);

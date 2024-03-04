@@ -3,6 +3,8 @@ package core.kobaco.infra.jpa.file.entity;
 import core.kobaco.domain.file.FileType;
 import core.kobaco.infra.jpa.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -11,7 +13,8 @@ import org.hibernate.annotations.SQLRestriction;
 @Entity
 @Table(name = "file")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @SQLDelete(sql = "UPDATE file SET is_deleted = true WHERE file_id = ?")
 @SQLRestriction("is_deleted = false")
 public class FileEntity extends BaseEntity {
@@ -20,7 +23,6 @@ public class FileEntity extends BaseEntity {
     @Column(name = "file_id")
     private Long id;
 
-    private String originalPath;
     private String fileName;
     @Enumerated(EnumType.STRING)
     private FileType fileType;

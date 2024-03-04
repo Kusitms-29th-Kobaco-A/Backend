@@ -1,16 +1,18 @@
 package core.kobaco.infra.jpa.comment.entity;
 
-import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
 import core.kobaco.infra.jpa.user.UserEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "comments")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

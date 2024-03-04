@@ -3,6 +3,7 @@ package core.kobaco.infra.jpa.advertisement.entity;
 import core.kobaco.infra.jpa.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -16,6 +17,7 @@ import java.util.List;
 @Table(name = "advertisement")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdvertisementEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,31 +36,6 @@ public class AdvertisementEntity extends BaseEntity {
     private String owner;
     private String ownerCompany;
     private String makerCompany;
-
-    private AdvertisementEntity(Long id,
-                                String videoUrl,
-                                String title,
-                                LocalDate uploadDate, Time videoTime,
-                                String copy,
-                                String copyDetail,
-                                List<String> peopleList,
-                                List<String> objectList,
-                                String owner,
-                                String ownerCompany,
-                                String makerCompany) {
-        this.id = id;
-        this.videoUrl = videoUrl;
-        this.title = title;
-        this.uploadDate = uploadDate;
-        this.videoTime = videoTime;
-        this.copy = copy;
-        this.copyDetail = copyDetail;
-        this.peopleList = peopleList;
-        this.objectList = objectList;
-        this.owner = owner;
-        this.ownerCompany = ownerCompany;
-        this.makerCompany = makerCompany;
-    }
 
     public static AdvertisementEntity of(
         Long id,

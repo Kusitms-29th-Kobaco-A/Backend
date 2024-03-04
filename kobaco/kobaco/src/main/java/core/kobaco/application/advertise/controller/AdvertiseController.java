@@ -23,7 +23,8 @@ public class AdvertiseController {
 
     @Operation(summary = "광고 생성")
     @PostMapping
-    public void createAdvertise(AdvertiseCreateRequest request) {
+    public void createAdvertise(
+        @RequestBody AdvertiseCreateRequest request) {
         advertiseService.createAdvertise(request);
     }
 

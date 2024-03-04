@@ -11,4 +11,6 @@ public interface AdvertisementRepository {
     Advertisement save(Advertisement advertisement);
 
     Page<Advertisement> findAll(Pageable pageable);
+
+    Page<Advertisement> findSavedAllByUserId(Pageable pageable, Long userId);
 }

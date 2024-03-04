@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.sql.Time;
 import java.time.LocalDate;
 
 @Getter
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 public class Advertisement {
     private Long advertiseId;
     private String videoUrl;
+    private Time videoTime;
     private String title;
     private LocalDate uploadDate;
     private String copy;
@@ -19,11 +21,12 @@ public class Advertisement {
 
     public static Advertisement of(Long advertiseId,
                                    String videoUrl,
+                                   Time videoTime,
                                    String title,
                                    LocalDate uploadDate,
                                    String copy,
                                    String copyDetail,
                                    AdvertisementDetail advertisementDetail) {
-        return new Advertisement(advertiseId, videoUrl, title, uploadDate,copy, copyDetail, advertisementDetail);
+        return new Advertisement(advertiseId, videoUrl, videoTime, title, uploadDate, copy, copyDetail, advertisementDetail);
     }
 }

@@ -41,7 +41,6 @@ public class AdvertiseSaveService {
         final User user = userUtils.getRequestUser();
         final String imageUrl = imageUploader.uploadImage(imageFile);
 //        final File captureDirectory = fileFactory.createAdvertiseCaptureDirectory(advertiseId, user.getId());
-        final File captureDirectory = fileFactory.createBasicDirectory(user.getId());
-        captureAppender.append(captureDirectory.getFileId(), advertiseId, imageUrl);
+        captureAppender.append(fileFactory.createBasicDirectory(user.getId()), advertiseId, imageUrl);
     }
 }

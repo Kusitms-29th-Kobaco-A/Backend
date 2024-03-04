@@ -30,4 +30,7 @@ public class AdvertiseReader {
         return advertisementRepository.findAll(pageable);
     }
 
+    public Page<Advertisement> getSaveAdvertiseList(Long requestUserId, Pageable pageable) {
+        return advertisementRepository.findSavedAllByUserId(pageable, requestUserId);
+    }
 }

@@ -9,9 +9,11 @@ import core.kobaco.domain.advertise.service.AdvertiseLikeManager;
 import core.kobaco.domain.advertise.service.AdvertiseReader;
 import core.kobaco.domain.keyword.service.KeywordFactory;
 import core.kobaco.domain.keyword.service.KeywordReader;
+import core.kobaco.domain.like.service.AdvertiseLikeReader;
 import core.kobaco.domain.user.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,7 @@ public class AdvertiseService {
     private final KeywordReader keywordReader;
     private final KeywordFactory keywordFactory;
     private final AdvertiseLikeManager advertiseLikeManager;
+    private final AdvertiseLikeReader advertiseLikeReader;
 
     @Transactional
     public void createAdvertise(AdvertiseCreateRequest request){
@@ -36,15 +39,8 @@ public class AdvertiseService {
     }
 
     public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable){
-//        return advertiseReader.getAdvertiseList(pageable)
-//            .map(advertise -> AdvertiseSimpleResponse.of(
-//                advertise,
-//                advertiseReader.getAdvertiseKeyword(advertise.getAdvertiseId())
-//                    .stream()
-//                    .map(keyword -> keywordReader.getKeyword(keyword.getKeywordId()).getKeyword())
-//                    .toList()
-//            ));
-        return null;
+        return advertiseReader.getAllAdvertiseList(pageable)
+            .map(AdvertiseSimpleResponse::of);
     }
 
 
@@ -72,4 +68,19 @@ public class AdvertiseService {
     }
 
 
+    public Page<AdvertiseSimpleResponse> getSaveAdvertiseList(Pageable pageable) {
+        if(!userUtils.isLogin())
+            return Page.empty();
+        return advertiseReader.getSaveAdvertiseList(userUtils.getRequestUserId(), pageable)
+            .map(AdvertiseSimpleResponse::of);
+    }
+
+    public Page<AdvertiseSimpleResponse> getLikeAdvertiseList(Pageable pageable) {
+        List<AdvertiseSimpleResponse> advertiseSimpleResponses = advertiseLikeReader.getLikeAdvertiseIdList(pageable).stream()
+            .map(advertiseReader::getAdvertise)
+            .map(AdvertiseSimpleResponse::of)
+            .toList();
+        return new PageImpl<>(advertiseSimpleResponses, pageable, advertiseSimpleResponses.size());
+
+    }
 }

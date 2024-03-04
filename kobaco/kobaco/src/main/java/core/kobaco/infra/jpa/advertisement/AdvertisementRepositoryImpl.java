@@ -28,6 +28,13 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
 
     @Override
     public Page<Advertisement> findAll(Pageable pageable) {
-        return null;
+        return advertisementJpaRepository.findAll(pageable)
+            .map(advertiseMapper::toDomain);
+    }
+
+    @Override
+    public Page<Advertisement> findSavedAllByUserId(Pageable pageable, Long userId) {
+        return advertisementJpaRepository.findSavedAllByUserId(pageable, userId)
+            .map(advertiseMapper::toDomain);
     }
 }

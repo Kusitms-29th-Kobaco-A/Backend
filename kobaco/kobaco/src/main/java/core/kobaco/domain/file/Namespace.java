@@ -1,16 +1,14 @@
 package core.kobaco.domain.file;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Namespace {
     private Long namespaceId;
     private Long userId;
-    private Namespace(Long namespaceId, Long userId) {
-        this.namespaceId = namespaceId;
-        this.userId = userId;
-    }
 
     public static Namespace from(Long userId) {
         return new Namespace(null, userId);

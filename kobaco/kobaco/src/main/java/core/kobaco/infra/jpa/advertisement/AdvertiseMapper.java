@@ -3,8 +3,10 @@ package core.kobaco.infra.jpa.advertisement;
 import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementDetail;
 import core.kobaco.domain.advertise.AdvertisementKeyword;
+import core.kobaco.domain.advertise.AdvertisementTrend;
 import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
 import core.kobaco.infra.jpa.advertisement.entity.AdvertisementKeywordEntity;
+import core.kobaco.infra.jpa.advertisement.entity.AdvertisementTrendEntity;
 import core.kobaco.infra.jpa.keyword.KeywordEntity;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +15,7 @@ public class AdvertiseMapper {
 
     public AdvertisementEntity toEntity(Advertisement advertisement) {
         return AdvertisementEntity.of(
-            advertisement.getAdvertiseId(),
+            advertisement.getId(),
             advertisement.getVideoUrl(),
             advertisement.getVideoTime(),
             advertisement.getTitle(),
@@ -57,9 +59,23 @@ public class AdvertiseMapper {
 
     public AdvertisementKeywordEntity toEntity(AdvertisementKeyword advertisementKeyword) {
         return AdvertisementKeywordEntity.of(
-            advertisementKeyword.getAdvertiseKeywordId(),
+            advertisementKeyword.getId(),
             AdvertisementEntity.from(advertisementKeyword.getAdvertiseId()),
             KeywordEntity.from(advertisementKeyword.getKeywordId())
+        );
+    }
+
+    public AdvertisementTrend toDomain(AdvertisementTrendEntity advertisementTrendEntity) {
+        return AdvertisementTrend.of(
+            advertisementTrendEntity.getId(),
+            advertisementTrendEntity.getBestAdvertise().getId()
+        );
+    }
+
+    public AdvertisementTrendEntity toEntity(AdvertisementTrend advertisementTrend) {
+        return AdvertisementTrendEntity.of(
+            advertisementTrend.getId(),
+            AdvertisementEntity.from(advertisementTrend.getAdvertiseId())
         );
     }
 }

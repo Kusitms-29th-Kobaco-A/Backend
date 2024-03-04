@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdvertiseSave {
-    private Long saveId;
+    private Long id;
     private Long fileId;
     private Long advertiseId;
 

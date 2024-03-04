@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Advertisement {
-    private Long advertiseId;
+    private Long id;
     private String videoUrl;
     private Time videoTime;
     private String title;

@@ -17,7 +17,7 @@ public class FileFormatter {
         return fileDetailFormatters.stream()
             .filter(formatter -> formatter.isSupported(file.getFileType()))
             .findFirst()
-            .map(formatter -> formatter.format(file.getFileId()))
+            .map(formatter -> formatter.format(file.getId()))
             .orElseThrow(() -> new IllegalArgumentException("지원하지 않는 파일 형식입니다."));
     }
 }

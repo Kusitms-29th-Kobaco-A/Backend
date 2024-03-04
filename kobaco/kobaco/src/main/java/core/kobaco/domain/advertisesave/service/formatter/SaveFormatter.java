@@ -26,7 +26,7 @@ public class SaveFormatter implements FileDetailFormatter {
             advertisement.getTitle(),
             null,
             advertisement.getVideoUrl(),
-            advertisement.getAdvertiseId(),
+            advertisement.getId(),
             FileType.ADVERTISE
         );
     }

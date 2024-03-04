@@ -12,7 +12,7 @@ public class File {
     private static final String CAPTURE_DIRECTORY_NAME = "capture";
     private static final String BASIC_DIRECTORY_NAME = "기본 폴더";
 
-    private Long fileId;
+    private Long id;
     private String fileName;
     private FileType fileType;
     private Long parentFileId;
@@ -76,6 +76,6 @@ public static File basicDirectory(Long parentFileId, Long namespaceId) {
 
 
     public void move(File targetDirectory) {
-        this.parentFileId = targetDirectory.getFileId();
+        this.parentFileId = targetDirectory.getId();
     }
 }

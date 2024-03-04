@@ -13,7 +13,7 @@ public class SaveMapper {
 
     public AdvertiseSaveEntity toEntity(AdvertiseSave advertiseSave) {
         return AdvertiseSaveEntity.of(
-            advertiseSave.getSaveId(),
+            advertiseSave.getId(),
             AdvertisementEntity.from(advertiseSave.getAdvertiseId()),
             FileEntity.from(advertiseSave.getFileId())
         );
@@ -38,7 +38,7 @@ public class SaveMapper {
 
     public AdvertiseCaptureEntity toEntity(AdvertiseCapture advertiseCapture) {
         return AdvertiseCaptureEntity.of(
-            advertiseCapture.getCaptureId(),
+            advertiseCapture.getId(),
             advertiseCapture.getImageUrl(),
             FileEntity.from(advertiseCapture.getFileId()),
             AdvertisementEntity.from(advertiseCapture.getAdvertiseId())

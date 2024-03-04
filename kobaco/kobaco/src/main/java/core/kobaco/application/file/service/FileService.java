@@ -31,9 +31,9 @@ public class FileService {
             ? fileFactory.createRootDirectory(userUtils.getRequestUserId())
             : fileReader.getFile(directoryId);
         return DirectoryDetailResponse.of(
-            directory.getFileId(),
+            directory.getId(),
             directory.getFileName(),
-            fileReader.getDirectoryFiles(directory.getFileId()),
+            fileReader.getDirectoryFiles(directory.getId()),
             fileFormatter::format
         );
     }
@@ -41,7 +41,7 @@ public class FileService {
     @Transactional
     public void createDirectory(Long parentDirectoryId, DirectoryCreateRequest request) {
         final Namespace namespace = fileReader.getNamespaceByUserId(userUtils.getRequestUserId());
-        fileAppender.append(request.toDomain(parentDirectoryId, namespace.getNamespaceId()));
+        fileAppender.append(request.toDomain(parentDirectoryId, namespace.getId()));
     }
 
     @Transactional

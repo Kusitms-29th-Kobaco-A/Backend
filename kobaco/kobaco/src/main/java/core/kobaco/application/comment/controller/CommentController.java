@@ -19,6 +19,7 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
 
+
     @Operation(summary = "댓글 생성")
     @PostMapping("comments/{advertiseId}")
     public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO, @PathVariable Long advertiseId) {

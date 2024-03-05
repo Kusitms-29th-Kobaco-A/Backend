@@ -25,7 +25,9 @@ public class CommentService {
 
     @Transactional
     public CommentDetail createComment(CommentDetail commentDetail, Long advertiseId) {
+
         final Long userId = userUtils.getRequestUserId();
+
         if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자가 인증되지 않았습니다.");
         }
@@ -38,17 +40,17 @@ public class CommentService {
         );
 
         Comment savedCommentEntity = commentRepository.save(comment, advertiseId);
+
         return new CommentDetail(
                 savedCommentEntity.getCommentId(),
-                savedCommentEntity.getContent(),
-                savedCommentEntity.getCommenterId()
+                savedCommentEntity.getContent()
         );
 
     }
-    public List<CommentDetail> getAllComments() {
-        List<Comment> comments = commentRepository.findAll();
+    public List<CommentDetail> getAllComments(Long advertiseId) {
+        List<Comment> comments = commentRepository.findAllByAdvertiseId(advertiseId);
         return comments.stream()
-                .map(comment -> new CommentDetail(comment.getCommentId(), comment.getContent(), comment.getCommenterId()))
+                .map(comment -> new CommentDetail(comment.getCommentId(), comment.getContent()))
                 .collect(Collectors.toList());
     }
 

@@ -36,8 +36,9 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public List<Comment> findAll() {
-        List<CommentEntity> commentEntities = commentJpaRepository.findAll();
+    public List<Comment> findAllByAdvertiseId(Long advertiseId) {
+        List<CommentEntity> commentEntities = commentJpaRepository.findAllByAdvertiseId(advertiseId);
         return commentMapper.toDomainList(commentEntities);
     }
+
 }

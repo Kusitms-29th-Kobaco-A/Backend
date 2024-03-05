@@ -27,9 +27,9 @@ echo $(docker image prune -f)
 application_status="FAIL"
 
 for i in {1..10}; do
-        cmd=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:${green_application_port}/health)
+        status=$(docker exec -it ${green_application_name} curl localhost:8079/actuator/health | grep -o '"status":"[^"]*' | awk -F ':"' '{print $2}')
 
-        if [ "$cmd" -eq 202 ]; then
+        if [ "$status" == "UP" ]; then
                 application_status="SUCCESS"
                 echo ${application_status}
                 break;

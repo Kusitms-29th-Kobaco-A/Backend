@@ -29,3 +29,11 @@ cloud:
         static: ${AWS_REGION}
       s3:
         bucket: ${AWS_S3_BUCKET}
+
+management:
+  server:
+    port: 8079
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -21,14 +21,14 @@ public class CommentController {
 
 
     @Operation(summary = "댓글 생성")
-    @PostMapping("comments/{advertiseId}")
+    @PostMapping("/{advertiseId}")
     public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO, @PathVariable Long advertiseId) {
         CommentDetail createdComment = commentService.createComment(commentDTO, advertiseId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
     @Operation(summary = "댓글 조회")
-    @GetMapping("comments/{advertiseId}")
+    @GetMapping("/{advertiseId}")
     public ResponseEntity<List<CommentDetail>> getAllComments(@PathVariable Long advertiseId) {
         List<CommentDetail> comments = commentService.getAllComments(advertiseId);
         return ApiResponse.success(comments);

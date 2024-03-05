@@ -2,6 +2,7 @@ package core.kobaco.infra.jpa.advertisement;
 
 import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementRepository;
+import core.kobaco.domain.advertise.OrderType;
 import core.kobaco.infra.jpa.advertisement.repository.AdvertisementJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,12 +42,30 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
     }
 
     @Override
-    public Page<Advertisement> findAllWithKeyword(Pageable pageable, List<String> keywordList) {
+    public Page<Advertisement> findAllWithKeyword(Pageable pageable, List<String> keywordList, OrderType orderType) {
         if(Objects.isNull(keywordList)||keywordList.isEmpty()){
-            return advertisementJpaRepository.findAll(pageable)
+            if(orderType.equals(OrderType.RECENT)){
+                return advertisementJpaRepository.findAll(pageable)
+                    .map(advertiseMapper::toDomain);
+            }
+            if(orderType.equals(OrderType.POPULAR)){
+                return advertisementJpaRepository.findAllOrderByPopularity(pageable)
+                    .map(advertiseMapper::toDomain);
+            }
+            if(orderType.equals(OrderType.VIEW_COUNT)){
+                return advertisementJpaRepository.findAllOrderByViewCount(pageable)
+                    .map(advertiseMapper::toDomain);
+            }
+        }
+        if(orderType.equals(OrderType.RECENT)){
+            return advertisementJpaRepository.findAllWithKeyword(pageable, keywordList)
                 .map(advertiseMapper::toDomain);
         }
-        return advertisementJpaRepository.findAllWithKeyword(pageable, keywordList)
+        if(orderType.equals(OrderType.POPULAR)){
+            return advertisementJpaRepository.findAllWithKeywordOrderByPopularity(pageable, keywordList)
+                .map(advertiseMapper::toDomain);
+        }
+        return advertisementJpaRepository.findAllWithKeywordOrderByViewCount(pageable, keywordList)
             .map(advertiseMapper::toDomain);
     }
 
@@ -60,5 +79,10 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
     public Page<Advertisement> findAllByMakerCompanyAndAdvertiseId(Pageable pageable, String makerCompany, Long advertiseId) {
         return advertisementJpaRepository.findAllByMakerCompanyAndAdvertiseId(pageable, makerCompany, advertiseId)
             .map(advertiseMapper::toDomain);
+    }
+
+    @Override
+    public void upViewCount(Long advertiseId) {
+        advertisementJpaRepository.updateViewCount(advertiseId);
     }
 }

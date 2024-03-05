@@ -9,12 +9,13 @@ import lombok.Getter;
 public class AdvertisementTrend {
     private Long id;
     private Long advertiseId;
+    private String title;
 
-    public static AdvertisementTrend of(Long bestAdvertiseId, Long advertiseId) {
-        return new AdvertisementTrend(bestAdvertiseId, advertiseId);
+    public static AdvertisementTrend of(Long bestAdvertiseId, Long advertiseId, String title) {
+        return new AdvertisementTrend(bestAdvertiseId, advertiseId, title);
     }
 
-    public static AdvertisementTrend from(Long advertiseId){
-        return new AdvertisementTrend(null, advertiseId);
+    public static AdvertisementTrend of(Long advertiseId, String title) {
+        return new AdvertisementTrend(null, advertiseId, title);
     }
 }

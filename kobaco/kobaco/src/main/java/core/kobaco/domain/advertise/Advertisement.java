@@ -18,6 +18,7 @@ public class Advertisement {
     private String copy;
     private String copyDetail;
     private AdvertisementDetail advertisementDetail;
+    private Long viewCount;
 
     public static Advertisement of(Long advertiseId,
                                    String videoUrl,
@@ -26,7 +27,8 @@ public class Advertisement {
                                    LocalDate uploadDate,
                                    String copy,
                                    String copyDetail,
-                                   AdvertisementDetail advertisementDetail) {
-        return new Advertisement(advertiseId, videoUrl, videoTime, title, uploadDate, copy, copyDetail, advertisementDetail);
+                                   AdvertisementDetail advertisementDetail,
+                                   Long viewCount) {
+        return new Advertisement(advertiseId, videoUrl, videoTime, title, uploadDate, copy, copyDetail, advertisementDetail, viewCount);
     }
 }

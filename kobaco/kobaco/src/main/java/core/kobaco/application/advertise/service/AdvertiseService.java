@@ -1,11 +1,9 @@
 package core.kobaco.application.advertise.service;
 
-import core.kobaco.application.advertise.service.dto.AdvertiseCreateRequest;
-import core.kobaco.application.advertise.service.dto.AdvertiseDetailResponse;
-import core.kobaco.application.advertise.service.dto.AdvertiseLikeDetailResponse;
-import core.kobaco.application.advertise.service.dto.AdvertiseSimpleResponse;
+import core.kobaco.application.advertise.service.dto.*;
 import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementTrend;
+import core.kobaco.domain.advertise.OrderType;
 import core.kobaco.domain.advertise.service.*;
 import core.kobaco.domain.keyword.Keyword;
 import core.kobaco.domain.keyword.service.KeywordFactory;
@@ -28,6 +26,7 @@ public class AdvertiseService {
     private final UserUtils userUtils;
     private final AdvertiseReader advertiseReader;
     private final AdvertiseAppender advertiseAppender;
+    private final AdvertiseModifier advertiseModifier;
     private final KeywordReader keywordReader;
     private final KeywordFactory keywordFactory;
     private final AdvertiseLikeManager advertiseLikeManager;
@@ -44,6 +43,7 @@ public class AdvertiseService {
 
 
     public AdvertiseDetailResponse getAdvertise(final Long advertiseId) {
+        advertiseModifier.upViewCount(advertiseId);
         return AdvertiseDetailResponse.of(
             advertiseReader.getAdvertise(advertiseId),
             advertiseReader.getAdvertiseKeyword(advertiseId)
@@ -94,8 +94,8 @@ public class AdvertiseService {
         return new PageImpl<>(advertiseSimpleResponses, pageable, advertiseSimpleResponses.size());
     }
 
-    public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable, List<String> keywordList) {
-        return advertiseReader.getAllAdvertiseList(pageable, keywordList)
+    public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable, List<String> keywordList, OrderType orderType) {
+        return advertiseReader.getAllAdvertiseList(pageable, keywordList, orderType)
             .map(advertise -> {
                 List<String> advertiseKeywordList = keywordReader.getKeywordList(advertiseKeywordReader.getKeywordIds(advertise.getId()))
                     .stream()
@@ -117,7 +117,7 @@ public class AdvertiseService {
             });
     }
 
-    public Page<AdvertiseSimpleResponse> getTrendAdvertiseList(Pageable pageable) {
+    public Page<TrendAdvertiseSimpleResponse> getTrendAdvertiseList(Pageable pageable) {
         return advertiseTrendReader.getTrendList(pageable)
             .map(advertiseTrend -> {
                 Advertisement advertisement = advertiseReader.getAdvertise(advertiseTrend.getAdvertiseId());
@@ -125,12 +125,15 @@ public class AdvertiseService {
                     .stream()
                     .map(Keyword::getKeyword)
                     .toList();
-                return AdvertiseSimpleResponse.of(advertisement, advertiseKeywordList);
+                return TrendAdvertiseSimpleResponse.of(
+                    AdvertiseSimpleResponse.of(advertisement, advertiseKeywordList),
+                    advertiseTrend.getTitle()
+                );
             });
     }
 
     @Transactional
-    public void trendAdvertise(Long advertiseId) {
-        advertiseAppender.appendTrend(AdvertisementTrend.from(advertiseId));
+    public void trendAdvertise(Long advertiseId, AdvertiseTrendCreateRequest request) {
+        advertiseAppender.appendTrend(AdvertisementTrend.of(advertiseId,request.title()));
     }
 }

@@ -15,11 +15,11 @@ public interface AdvertisementRepository {
 
     Page<Advertisement> findSavedAllByUserId(Pageable pageable, Long userId);
 
-    Page<Advertisement> findAllWithKeyword(Pageable pageable, List<String> keywordList);
+    Page<Advertisement> findAllWithKeyword(Pageable pageable, List<String> keywordList, OrderType orderType);
 
     Page<Advertisement> findAllWithKeywordByAdvertiseId(Pageable pageable, Long advertiseId);
 
-
-
     Page<Advertisement> findAllByMakerCompanyAndAdvertiseId(Pageable pageable, String makerCompany, Long advertiseId);
+
+    void upViewCount(Long advertiseId);
 }

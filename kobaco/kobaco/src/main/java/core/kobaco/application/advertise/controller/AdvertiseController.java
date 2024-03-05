@@ -1,10 +1,8 @@
 package core.kobaco.application.advertise.controller;
 
 import core.kobaco.application.advertise.service.AdvertiseService;
-import core.kobaco.application.advertise.service.dto.AdvertiseCreateRequest;
-import core.kobaco.application.advertise.service.dto.AdvertiseDetailResponse;
-import core.kobaco.application.advertise.service.dto.AdvertiseLikeDetailResponse;
-import core.kobaco.application.advertise.service.dto.AdvertiseSimpleResponse;
+import core.kobaco.application.advertise.service.dto.*;
+import core.kobaco.domain.advertise.OrderType;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,17 +26,24 @@ public class AdvertiseController {
         advertiseService.createAdvertise(request);
     }
 
-    @Operation(summary = "광고 목록 조회", description = """
+    @Operation(summary = "전체 광고", description = """
         query param을 통해서 검색어를 전달받아 검색어에 해당하는 광고 목록을 조회합니다.
         컨셉, 상업군 상관없이 keywordList에 전달하면 됩니다.
+        
+        orderType에 따라서 최신순, 인기순, 조회수 순으로 정렬할 수 있습니다.
+        - RECENT: 최신순
+        - POPULAR: 인기순
+        - VIEW: 조회수순
         """)
     @GetMapping
     public Page<AdvertiseSimpleResponse> getAdvertiseList(
         Pageable pageable,
-        @RequestParam(required = false) List<String> keywordList) {
+        @RequestParam(required = false) List<String> keywordList,
+        @RequestParam OrderType orderType) {
         return advertiseService.getAdvertiseList(
             PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("id").descending()),
-            keywordList
+            keywordList,
+            orderType
         );
     }
 
@@ -77,15 +82,16 @@ public class AdvertiseController {
 
     @Operation(summary = "트랜드 광고 조회")
     @GetMapping("/trends")
-    public Page<AdvertiseSimpleResponse> getTrendAdvertises(Pageable pageable){
+    public Page<TrendAdvertiseSimpleResponse> getTrendAdvertises(Pageable pageable){
         return advertiseService.getTrendAdvertiseList(pageable);
     }
 
     @Operation(summary = "트랜드 광고 만들기", description = """
         특정 광고를 요청 보내면 해당 광고를 트랜드 광고로 만듭니다.""")
     @PostMapping("/{advertiseId}/trends")
-    public void trendAdvertise(@PathVariable Long advertiseId){
-        advertiseService.trendAdvertise(advertiseId);
+    public void trendAdvertise(@PathVariable Long advertiseId,
+                               @RequestBody AdvertiseTrendCreateRequest request){
+        advertiseService.trendAdvertise(advertiseId, request);
     }
 
     @Operation(summary = "광고 추천", description = """

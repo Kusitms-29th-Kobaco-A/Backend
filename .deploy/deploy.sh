@@ -40,7 +40,7 @@ for i in {1..10}; do
         fi
 done
 
-if [ "$application_staus" == "FAIL" ]; then
+if [ "$application_status" == "FAIL" ]; then
         echo "application unhealty"
         $(docker rm -f $green_application_name)
 else

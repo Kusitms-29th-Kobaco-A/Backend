@@ -17,7 +17,8 @@ public record AdvertiseDetailResponse(
     String owner,
     String ownerCompany,
     String makerCompany,
-    List<String> keywordList
+    List<String> keywordList,
+    Long viewCount
 ) {
 
     public static AdvertiseDetailResponse of(Advertisement advertisement, List<String> keywordList){
@@ -33,7 +34,8 @@ public record AdvertiseDetailResponse(
             advertisement.getAdvertisementDetail().getOwner(),
             advertisement.getAdvertisementDetail().getOwnerCompany(),
             advertisement.getAdvertisementDetail().getMakerCompany(),
-            keywordList
+            keywordList,
+            advertisement.getViewCount()
         );
     }
 }

@@ -13,7 +13,7 @@ public class AdvertiseLikeReader {
     private final AdvertiseLikeRepository likeRepository;
 
 
-    public List<Long> getLikeAdvertiseIdList(Pageable pageable) {
-        return likeRepository.findTopLankAdvertiseId(pageable);
+    public List<Long> getLikeAdvertiseIdList(Pageable pageable, List<String> keywordList) {
+        return likeRepository.findTopLankAdvertiseId(pageable, keywordList);
     }
 }

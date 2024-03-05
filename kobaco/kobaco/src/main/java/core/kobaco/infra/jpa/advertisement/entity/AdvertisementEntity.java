@@ -35,6 +35,8 @@ public class AdvertisementEntity extends BaseEntity {
     private String ownerCompany;
     private String makerCompany;
 
+    private Long viewCount;
+
     private AdvertisementEntity(Long id,
                                 String videoUrl,
                                 String title,
@@ -45,7 +47,8 @@ public class AdvertisementEntity extends BaseEntity {
                                 List<String> objectList,
                                 String owner,
                                 String ownerCompany,
-                                String makerCompany) {
+                                String makerCompany,
+                                Long viewCount) {
         this.id = id;
         this.videoUrl = videoUrl;
         this.title = title;
@@ -58,6 +61,7 @@ public class AdvertisementEntity extends BaseEntity {
         this.owner = owner;
         this.ownerCompany = ownerCompany;
         this.makerCompany = makerCompany;
+        this.viewCount = viewCount;
     }
 
     public static AdvertisementEntity of(
@@ -72,12 +76,13 @@ public class AdvertisementEntity extends BaseEntity {
         List<String> objectList,
         String owner,
         String ownerCompany,
-        String makerCompany) {
-        return new AdvertisementEntity(id, videoUrl, title, uploadDate, videoTime, copy, copyDetail, peopleList, objectList, owner, ownerCompany, makerCompany);
+        String makerCompany,
+        Long viewCount) {
+        return new AdvertisementEntity(id, videoUrl, title, uploadDate, videoTime, copy, copyDetail, peopleList, objectList, owner, ownerCompany, makerCompany, viewCount);
     }
 
     public static AdvertisementEntity from(Long id){
-        return new AdvertisementEntity(id, null, null, null, null, null, null, null, null, null, null, null);
+        return new AdvertisementEntity(id, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 }
 

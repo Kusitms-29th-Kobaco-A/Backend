@@ -1,5 +1,6 @@
 package core.kobaco.domain.advertise.service;
 
+import core.kobaco.domain.advertise.OrderType;
 import core.kobaco.domain.advertise.Advertisement;
 import core.kobaco.domain.advertise.AdvertisementKeyword;
 import core.kobaco.domain.advertise.AdvertisementKeywordRepository;
@@ -30,9 +31,11 @@ public class AdvertiseReader {
         return advertisementKeywordRepository.findAllByAdvertiseId(advertiseId);
     }
 
-    public Page<Advertisement> getAllAdvertiseList(Pageable pageable, @Nullable List<String> keywordList) {
+    public Page<Advertisement> getAllAdvertiseList(Pageable pageable,
+                                                   @Nullable List<String> keywordList,
+                                                   OrderType orderType) {
 //        return advertisementRepository.findAll(pageable);
-        return advertisementRepository.findAllWithKeyword(pageable, keywordList);
+        return advertisementRepository.findAllWithKeyword(pageable, keywordList, orderType);
     }
 
     public Page<Advertisement> getSaveAdvertiseList(Long requestUserId, Pageable pageable) {

@@ -26,7 +26,8 @@ public class AdvertiseMapper {
             advertisement.getAdvertisementDetail().getObjectList(),
             advertisement.getAdvertisementDetail().getOwner(),
             advertisement.getAdvertisementDetail().getOwnerCompany(),
-            advertisement.getAdvertisementDetail().getMakerCompany()
+            advertisement.getAdvertisementDetail().getMakerCompany(),
+            advertisement.getViewCount()
         );
     }
 
@@ -45,7 +46,8 @@ public class AdvertiseMapper {
                 advertisementEntity.getOwner(),
                 advertisementEntity.getOwnerCompany(),
                 advertisementEntity.getMakerCompany()
-            )
+            ),
+            advertisementEntity.getViewCount()
         );
     }
 

@@ -39,7 +39,8 @@ public record AdvertiseCreateRequest(
                 owner,
                 ownerCompany,
                 makerCompany
-            )
+            ),
+            0L
         );
     }
 }

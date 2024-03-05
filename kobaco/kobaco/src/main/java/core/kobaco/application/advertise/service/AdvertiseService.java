@@ -26,6 +26,7 @@ public class AdvertiseService {
     private final UserUtils userUtils;
     private final AdvertiseReader advertiseReader;
     private final AdvertiseAppender advertiseAppender;
+    private final AdvertiseModifier advertiseModifier;
     private final KeywordReader keywordReader;
     private final KeywordFactory keywordFactory;
     private final AdvertiseLikeManager advertiseLikeManager;
@@ -42,6 +43,7 @@ public class AdvertiseService {
 
 
     public AdvertiseDetailResponse getAdvertise(final Long advertiseId) {
+        advertiseModifier.upViewCount(advertiseId);
         return AdvertiseDetailResponse.of(
             advertiseReader.getAdvertise(advertiseId),
             advertiseReader.getAdvertiseKeyword(advertiseId)

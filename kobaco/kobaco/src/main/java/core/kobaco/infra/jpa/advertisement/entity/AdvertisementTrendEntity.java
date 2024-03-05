@@ -19,11 +19,13 @@ public class AdvertisementTrendEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private AdvertisementEntity bestAdvertise;
 
-    public static AdvertisementTrendEntity from(AdvertisementEntity bestAdvertise) {
-        return new AdvertisementTrendEntity(null, bestAdvertise);
+    private String title;
+
+    public static AdvertisementTrendEntity from(AdvertisementEntity bestAdvertise, String title) {
+        return new AdvertisementTrendEntity(null, bestAdvertise, title);
     }
 
-    public static AdvertisementTrendEntity of(Long id, AdvertisementEntity bestAdvertise) {
-        return new AdvertisementTrendEntity(id, bestAdvertise);
+    public static AdvertisementTrendEntity of(Long id, AdvertisementEntity bestAdvertise, String title) {
+        return new AdvertisementTrendEntity(id, bestAdvertise, title);
     }
 }

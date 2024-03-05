@@ -68,14 +68,16 @@ public class AdvertiseMapper {
     public AdvertisementTrend toDomain(AdvertisementTrendEntity advertisementTrendEntity) {
         return AdvertisementTrend.of(
             advertisementTrendEntity.getId(),
-            advertisementTrendEntity.getBestAdvertise().getId()
+            advertisementTrendEntity.getBestAdvertise().getId(),
+            advertisementTrendEntity.getTitle()
         );
     }
 
     public AdvertisementTrendEntity toEntity(AdvertisementTrend advertisementTrend) {
         return AdvertisementTrendEntity.of(
             advertisementTrend.getId(),
-            AdvertisementEntity.from(advertisementTrend.getAdvertiseId())
+            AdvertisementEntity.from(advertisementTrend.getAdvertiseId()),
+            advertisementTrend.getTitle()
         );
     }
 }

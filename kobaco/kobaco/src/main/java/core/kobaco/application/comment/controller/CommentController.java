@@ -18,12 +18,10 @@ import java.util.List;
 @RequestMapping("/api/comments")
 public class CommentController {
     private final CommentService commentService;
-
-
     @Operation(summary = "댓글 생성")
-    @PostMapping("/{advertiseId}")
-    public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO, @PathVariable Long advertiseId) {
-        CommentDetail createdComment = commentService.createComment(commentDTO, advertiseId);
+    @PostMapping
+    public ResponseEntity<CommentDetail> createComment(@RequestBody String content) {
+        CommentDetail createdComment = commentService.createComment(content);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 

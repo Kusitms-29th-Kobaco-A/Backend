@@ -30,7 +30,7 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentDetail createComment(CommentDetail commentDetail, Long advertiseId) {
+    public CommentDetail createComment(String content) {
         final Long userId = userUtils.getRequestUserId();
 
         if (userId == null) {
@@ -39,12 +39,12 @@ public class CommentService {
 
         Comment comment = new Comment(
                 null,
-                commentDetail.getContent(),
+                content,
                 userId,
-                advertiseId
+                null // 광고 ID는 null로 설정
         );
 
-        Comment savedCommentEntity = commentRepository.save(comment, advertiseId);
+        Comment savedCommentEntity = commentRepository.save(comment);
 
         String userEmail = getUserEmail(userId);
 
@@ -64,7 +64,6 @@ public class CommentService {
 
     private String getUserEmail(Long userId) {
         return userReader.read(userId).getEmail();
-
     }
 
     @Transactional

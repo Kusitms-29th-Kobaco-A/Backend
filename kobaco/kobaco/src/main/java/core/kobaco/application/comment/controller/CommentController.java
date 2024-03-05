@@ -20,8 +20,8 @@ public class CommentController {
     private final CommentService commentService;
 
     @Operation(summary = "댓글 생성")
-    @PostMapping
-    public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO, @RequestParam Long advertiseId) {
+    @PostMapping("comments/{advertiseId}")
+    public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO, @PathVariable Long advertiseId) {
         CommentDetail createdComment = commentService.createComment(commentDTO, advertiseId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }

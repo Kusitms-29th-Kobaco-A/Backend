@@ -12,13 +12,13 @@ import java.util.List;
 public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementEntity, Long> {
 
     @Query("""
-                select distinct ae
+                select ae
                 from AdvertisementEntity ae
                 join AdvertiseSaveEntity ase on ae.id = ase.advertisement.id
                 where ase.file.id in (
-                select fe.id
-                from FileEntity fe
-                join NamespaceEntity  ne on fe.namespace=ne and ne.user.id = :userId
+                    select fe.id
+                    from FileEntity fe
+                    join NamespaceEntity  ne on fe.namespace=ne and ne.user.id = :userId
                 )
                 order by ase.id desc
         """)

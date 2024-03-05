@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 public class CommentDetail {
     private Long commentId;
     private String content;
+    private String commenterEmail;
 
-    public CommentDetail(Long commentId, String content) {
+    public CommentDetail(Long commentId, String content, String commenterEmail) {
         this.commentId = commentId;
         this.content = content;
+        this.commenterEmail = commenterEmail;
     }
 
-    public static CommentDetail of(Long commentId, String content) {
-        return new CommentDetail(commentId, content);
+    public static CommentDetail of(Long commentId, String content, String commenterEmail) {
+        return new CommentDetail(commentId, content, commenterEmail);
     }
 }

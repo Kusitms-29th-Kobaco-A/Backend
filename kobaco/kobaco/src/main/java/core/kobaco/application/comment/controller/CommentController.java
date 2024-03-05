@@ -20,15 +20,15 @@ public class CommentController {
     private final CommentService commentService;
 
     @Operation(summary = "댓글 생성")
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO, @RequestParam Long advertiseId) {
         CommentDetail createdComment = commentService.createComment(commentDTO, advertiseId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
     @Operation(summary = "댓글 조회")
-    @GetMapping("/all")
-    public ResponseEntity<List<CommentDetail>> getAllComments(@RequestParam Long advertiseId) {
+    @GetMapping("comments/{advertiseId}")
+    public ResponseEntity<List<CommentDetail>> getAllComments(@PathVariable Long advertiseId) {
         List<CommentDetail> comments = commentService.getAllComments(advertiseId);
         return ApiResponse.success(comments);
     }

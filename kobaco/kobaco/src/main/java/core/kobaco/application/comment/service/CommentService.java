@@ -3,6 +3,8 @@ package core.kobaco.application.comment.service;
 import core.kobaco.application.comment.service.dto.CommentDetail;
 import core.kobaco.domain.comment.*;
 
+import core.kobaco.domain.user.User;
+import core.kobaco.domain.user.UserRepository;
 import core.kobaco.domain.user.UserUtils;
 
 import jakarta.transaction.Transactional;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
     private final UserUtils userUtils;
     private final CommentLikeManager commentLikeManager;
 
@@ -43,15 +46,23 @@ public class CommentService {
 
         return new CommentDetail(
                 savedCommentEntity.getCommentId(),
-                savedCommentEntity.getContent()
+                savedCommentEntity.getContent(),
+                getUserEmail(userId)
         );
 
     }
+
     public List<CommentDetail> getAllComments(Long advertiseId) {
         List<Comment> comments = commentRepository.findAllByAdvertiseId(advertiseId);
         return comments.stream()
-                .map(comment -> new CommentDetail(comment.getCommentId(), comment.getContent()))
+                .map(comment -> new CommentDetail(comment.getCommentId(), comment.getContent(), getUserEmail(comment.getCommenterId())))
                 .collect(Collectors.toList());
+    }
+
+    private String getUserEmail(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+        return user.getEmail();
     }
 
     @Transactional

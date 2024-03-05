@@ -74,10 +74,12 @@ public class AdvertiseController {
         return advertiseService.getSaveAdvertiseList(pageable);
     }
 
+    // keyword 검색 추가하기
     @Operation(summary = "인기 급상승 영상 조회")
     @GetMapping("/likes")
-    public Page<AdvertiseSimpleResponse> getLikeAdvertises(Pageable pageable){
-        return advertiseService.getLikeAdvertiseList(pageable);
+    public Page<AdvertiseSimpleResponse> getLikeAdvertises(Pageable pageable,
+                                                           @RequestParam(required = false) List<String> keywordList){
+        return advertiseService.getLikeAdvertiseList(pageable, keywordList);
     }
 
     @Operation(summary = "트랜드 광고 조회")

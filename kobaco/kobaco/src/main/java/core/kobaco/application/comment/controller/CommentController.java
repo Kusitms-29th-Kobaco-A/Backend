@@ -2,7 +2,8 @@ package core.kobaco.application.comment.controller;
 
 import core.kobaco.application.comment.service.CommentLikeDetailResponse;
 import core.kobaco.application.comment.service.CommentService;
-import core.kobaco.application.comment.service.dto.CommentDetail;
+import core.kobaco.application.comment.service.dto.CommentCreateRequest;
+import core.kobaco.application.comment.service.dto.CommentDetailResponse;
 import core.kobaco.global.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,19 +19,18 @@ import java.util.List;
 @RequestMapping("/api/comments")
 public class CommentController {
     private final CommentService commentService;
-
-
     @Operation(summary = "댓글 생성")
     @PostMapping("/{advertiseId}")
-    public ResponseEntity<CommentDetail> createComment(@RequestBody CommentDetail commentDTO, @PathVariable Long advertiseId) {
-        CommentDetail createdComment = commentService.createComment(commentDTO, advertiseId);
+    public ResponseEntity<CommentCreateRequest> createComment(@RequestBody CommentCreateRequest commentDTO, @PathVariable Long advertiseId) {
+        CommentCreateRequest createdComment = commentService.createComment(commentDTO.getContent(), advertiseId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
+
     @Operation(summary = "댓글 조회")
     @GetMapping("/{advertiseId}")
-    public ResponseEntity<List<CommentDetail>> getAllComments(@PathVariable Long advertiseId) {
-        List<CommentDetail> comments = commentService.getAllComments(advertiseId);
+    public ResponseEntity<List<CommentDetailResponse>> getAllComments(@PathVariable Long advertiseId) {
+        List<CommentDetailResponse> comments = commentService.getAllComments(advertiseId);
         return ApiResponse.success(comments);
     }
 
@@ -47,4 +47,5 @@ public class CommentController {
     }
 
 }
+
 

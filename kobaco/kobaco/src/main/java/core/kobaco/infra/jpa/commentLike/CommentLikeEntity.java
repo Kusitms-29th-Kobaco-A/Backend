@@ -35,3 +35,4 @@ public class CommentLikeEntity {
         return new CommentLikeEntity(id, user, comment);
     }
 }
+

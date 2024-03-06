@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface CommentJpaRepository extends JpaRepository<CommentEntity,Long> {
     List<CommentEntity> findAllByAdvertiseId(Long advertiseId);
-
 }
+
+

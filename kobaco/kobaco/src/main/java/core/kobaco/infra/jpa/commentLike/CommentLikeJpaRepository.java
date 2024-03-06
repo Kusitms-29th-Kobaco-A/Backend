@@ -14,3 +14,4 @@ public interface CommentLikeJpaRepository extends JpaRepository<CommentLikeEntit
 
     Optional<CommentLikeEntity> findByCommentIdAndUserId(Long commentId, Long userId);
 }
+

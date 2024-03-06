@@ -9,3 +9,4 @@ public interface CommentRepository {
     List<Comment> findAllByAdvertiseId(Long advertiseId);
 
 }
+

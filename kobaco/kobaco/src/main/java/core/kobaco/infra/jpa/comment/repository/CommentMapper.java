@@ -17,8 +17,10 @@ public class CommentMapper {
     public CommentEntity toEntity(Comment comment, Long userId, Long advertiseId) {
         UserEntity userEntity = UserEntity.from(userId);
         AdvertisementEntity advertisementEntity = AdvertisementEntity.from(advertiseId);
-        return CommentEntity.of(comment.getContent(), userEntity, advertisementEntity);
+        return CommentEntity.of(comment.getCommentId(), comment.getContent(), userEntity, advertisementEntity);
     }
+
+
     public Comment toDomain(CommentEntity commentEntity) {
         return new Comment(
                 commentEntity.getId(),
@@ -33,3 +35,4 @@ public class CommentMapper {
                 .collect(Collectors.toList());
     }
 }
+

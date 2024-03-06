@@ -1,9 +1,7 @@
 package core.kobaco.infra.jpa.commentLike;
 
-import core.kobaco.domain.commentLike.service.CommentLike;
-import core.kobaco.domain.commentLike.service.CommentLikeRepository;
-import core.kobaco.infra.jpa.commentLike.CommentLikeJpaRepository;
-import core.kobaco.infra.jpa.commentLike.CommentLikeMapper;
+import core.kobaco.domain.commentlike.service.CommentLike;
+import core.kobaco.domain.commentlike.service.CommentLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -40,3 +38,4 @@ public class CommentLikeRepositoryImpl implements CommentLikeRepository {
         return commentLikeJpaRepository.findByCommentIdAndUserId(commentId, userId).map(likeMapper::toDomain);
     }
 }
+

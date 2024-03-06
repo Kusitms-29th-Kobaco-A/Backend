@@ -1,4 +1,4 @@
-package core.kobaco.domain.commentLike.service;
+package core.kobaco.domain.commentlike.service;
 
 import lombok.Getter;
 
@@ -19,3 +19,4 @@ public class CommentLike {
         return new CommentLike(likeId, commentId, userId);
     }
 }
+

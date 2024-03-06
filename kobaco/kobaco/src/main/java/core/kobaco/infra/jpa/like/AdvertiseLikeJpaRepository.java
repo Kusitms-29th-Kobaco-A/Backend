@@ -26,15 +26,14 @@ public interface AdvertiseLikeJpaRepository extends JpaRepository<AdvertiseLikeE
     @Query("""
         select al.advertisement.id
         from AdvertiseLikeEntity al
-        where al.advertisement.id in (
-            select a.id
-            from AdvertisementEntity a
-            join AdvertisementKeywordEntity ak on a.id = ak.advertisement.id
-            join KeywordEntity k on ak.keyword=k
-            where k.description in :keywordList
+        join AdvertisementKeywordEntity ak on ak.advertisement=al.advertisement and ak.keyword in (
+            select ke
+            from KeywordEntity ke
+            where ke.description in :keywordList
         )
         group by al.advertisement.id
+        having count(distinct ak.keyword) = :keywordSize
         order by count(al.advertisement.id) desc, al.advertisement.id desc
         """)
-    List<Long> findTopLankAdvertiseIdWithKeyword(Pageable pageable, List<String> keywordList);
+    List<Long> findTopLankAdvertiseIdWithKeyword(Pageable pageable, List<String> keywordList, Long keywordSize);
 }

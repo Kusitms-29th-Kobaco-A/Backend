@@ -45,7 +45,7 @@ public class AdvertiseLikeRepositoryImpl implements AdvertiseLikeRepository {
     public List<Long> findTopLankAdvertiseId(Pageable pageable, List<String> keywordList) {
         if(Objects.isNull(keywordList) || keywordList.isEmpty())
             return advertiseLikeJpaRepository.findTopLankAdvertiseId(pageable);
-        return advertiseLikeJpaRepository.findTopLankAdvertiseIdWithKeyword(pageable, keywordList);
+        return advertiseLikeJpaRepository.findTopLankAdvertiseIdWithKeyword(pageable, keywordList, (long) keywordList.size());
     }
 
 }

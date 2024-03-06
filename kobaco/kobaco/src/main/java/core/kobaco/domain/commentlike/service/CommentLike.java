@@ -19,3 +19,4 @@ public class CommentLike {
         return new CommentLike(likeId, commentId, userId);
     }
 }
+

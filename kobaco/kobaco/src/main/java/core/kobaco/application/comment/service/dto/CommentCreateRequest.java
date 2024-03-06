@@ -16,3 +16,4 @@ public class CommentCreateRequest {
         return new CommentCreateRequest(content);
     }
 }
+

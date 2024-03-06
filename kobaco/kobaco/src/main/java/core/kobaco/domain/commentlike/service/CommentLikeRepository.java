@@ -14,3 +14,4 @@ public interface CommentLikeRepository {
         Optional<CommentLike> findByCommentIdAndUserId(Long commentId, Long userId);
     }
 
+

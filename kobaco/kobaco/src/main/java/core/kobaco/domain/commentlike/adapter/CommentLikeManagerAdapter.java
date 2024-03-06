@@ -32,3 +32,4 @@ public class CommentLikeManagerAdapter implements CommentLikeManager {
                 );
     }
 }
+

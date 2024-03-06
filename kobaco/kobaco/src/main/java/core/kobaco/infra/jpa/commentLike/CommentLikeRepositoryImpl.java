@@ -38,3 +38,4 @@ public class CommentLikeRepositoryImpl implements CommentLikeRepository {
         return commentLikeJpaRepository.findByCommentIdAndUserId(commentId, userId).map(likeMapper::toDomain);
     }
 }
+

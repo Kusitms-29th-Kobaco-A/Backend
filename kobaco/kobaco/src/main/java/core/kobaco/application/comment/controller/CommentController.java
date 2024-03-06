@@ -26,6 +26,7 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 
+
     @Operation(summary = "댓글 조회")
     @GetMapping("/{advertiseId}")
     public ResponseEntity<List<CommentDetailResponse>> getAllComments(@PathVariable Long advertiseId) {

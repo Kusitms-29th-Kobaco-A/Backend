@@ -12,11 +12,26 @@ public class FileModifier {
     private final FileReader fileReader;
 
     public void updateDirectory(final Long directoryId, final String directoryName){
-        File directory = fileReader.getDirectory(directoryId);
-        if(directory.isRootDirectory()){
-            throw new IllegalArgumentException("Root directory name cannot be updated");
+        File directory = fileReader.getFile(directoryId);
+        if(!directory.isModifiable()){
+            throw new IllegalArgumentException("directory name cannot be updated");
         }
         directory.updateDirectoryName(directoryName);
         fileRepository.update(directory);
+    }
+
+    public void moveDirectory(Long directoryId, Long targetDirectoryId) {
+        File directory = fileReader.getFile(directoryId);
+        File targetDirectory = fileReader.getFile(targetDirectoryId);
+        directory.move(targetDirectory);
+        fileRepository.update(directory);
+    }
+
+    public void deleteDirectory(Long directoryId) {
+        File directory = fileReader.getFile(directoryId);
+        if(!directory.isModifiable()){
+            throw new IllegalArgumentException("Root directory cannot be deleted");
+        }
+        fileRepository.delete(directory);
     }
 }

@@ -4,10 +4,8 @@ import core.kobaco.application.advertisesave.service.AdvertiseSaveService;
 import core.kobaco.application.advertisesave.service.dto.AdvertiseSaveRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/saves")
@@ -26,8 +24,11 @@ public class AdvertiseSaveController {
     }
 
     @Operation(summary = "광고 캡쳐 저장")
-    @PostMapping("/advertises/capture")
-    public void saveAdvertiseCapture(){
-
+    @PostMapping("/advertises/{advertiseId}/capture")
+    public void saveAdvertiseCapture(
+        @RequestPart("imageFile")MultipartFile imageFile,
+        @PathVariable Long advertiseId
+        ){
+        advertiseSaveService.captureAdvertise(imageFile, advertiseId);
     }
 }

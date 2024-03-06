@@ -10,7 +10,7 @@ public class LikeMapper {
 
     public AdvertiseLikeEntity toEntity(AdvertiseLike advertiseLike) {
         return AdvertiseLikeEntity.of(
-            advertiseLike.getLikeId(),
+            advertiseLike.getId(),
             UserEntity.from(advertiseLike.getUserId()),
             AdvertisementEntity.from(advertiseLike.getAdvertiseId())
         );

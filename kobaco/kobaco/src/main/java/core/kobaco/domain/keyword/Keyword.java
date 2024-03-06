@@ -1,16 +1,14 @@
 package core.kobaco.domain.keyword;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Keyword {
-    private Long keywordId;
+    private Long id;
     private String keyword;
-
-    private Keyword(Long keywordId, String keyword) {
-        this.keywordId = keywordId;
-        this.keyword = keyword;
-    }
 
     public static Keyword of(Long keywordId, String keyword) {
         return new Keyword(keywordId, keyword);

@@ -5,9 +5,7 @@ import core.kobaco.domain.keyword.KeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +15,7 @@ public class KeywordFactory {
     public Long upsert(String keyword) {
         return keywordRepository.findByKeyword(keyword)
             .orElseGet(() -> keywordRepository.save(Keyword.from(keyword)))
-            .getKeywordId();
+            .getId();
     }
 
     public List<Long> upsert(List<String> keywords) {

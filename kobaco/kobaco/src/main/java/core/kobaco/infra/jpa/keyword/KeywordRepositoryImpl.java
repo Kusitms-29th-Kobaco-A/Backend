@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -28,6 +29,14 @@ public class KeywordRepositoryImpl implements KeywordRepository {
                 log.info("findKeyword: {}", findKeyword.getKeyword());
                 return findKeyword;
             });
+    }
+
+    @Override
+    public List<Keyword> findAllById(List<Long> keywordIdList) {
+        return keywordJpaRepository.findAllById(keywordIdList)
+            .stream()
+            .map(keywordMapper::toDomain)
+            .toList();
     }
 
     @Override

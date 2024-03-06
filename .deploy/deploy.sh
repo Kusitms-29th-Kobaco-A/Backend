@@ -1,15 +1,13 @@
 #! /bin/bash
 
-source .env
-
-current_application_port=$application_port
-
-echo ${current_application_port}
-
 green_application_port=0
 green_application_name="green-application"
 blue_application_name="blue-application"
 temp_application_name="deprecated-application"
+
+current_application_port=$(docker inspect --format='{{index .NetworkSettings.Ports "8080/tcp" 0 "HostPort"}}' ${blue_application_name})
+
+echo "blue-application port is ${current_application_port}"
 
 if [ "$current_application_port" -eq 8081 ]; then
         green_application_port=8082
@@ -17,45 +15,38 @@ else
         green_application_port=8081
 fi
 
-echo ${green_application_port}
+echo "green-application port is ${green_application_port}"
 
+image_name="wendyjihyo/github-actions-kobaco"
 
-echo $(docker pull wendyjihyo/github-actions-kobaco)
-
-cmd=$(docker run -d -p ${green_application_port}:8080 --name ${green_application_name} --net application --env-file /home/ubuntu/.env  wendyjihyo/github-actions-kobaco)
-
+echo $(docker pull ${image_name})
+echo $(docker run -d -p ${green_application_port}:8080 --name ${green_application_name} --net application --env-file /home/ubuntu/.env  ${image_name})
 echo $(docker image prune -f)
 
-echo ${cmd}
-
-# 실행 되는지 확인 -> 확인이 health 채크가 완료되면 blue rename to deprecated-application -> green rename to blue -> nginx reload
 
 application_status="FAIL"
 
 for i in {1..10}; do
-        cmd=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:${green_application_port}/health)
+        status=$(docker exec -i ${green_application_name} curl localhost:8079/actuator/health | grep -o '"status":"[^"]*' | awk -F ':"' '{print $2}')
 
-        echo ${cmd}
-
-        if [ "$cmd" -eq 202 ]; then
+        if [ "$status" == "UP" ]; then
                 application_status="SUCCESS"
                 echo ${application_status}
                 break;
         else
-                echo "FAIL"
+                echo "${application_status}"
+                echo "wait for application ready..."
                 sleep 10
         fi
 done
 
-if [ "$application_staus" == "FAIL" ]; then
+if [ "$application_status" == "FAIL" ]; then
         echo "application unhealty"
         $(docker rm -f $green_application_name)
 else
         echo "reload processing"
-        echo $(docker image prune -f)
         echo $(docker rename $blue_application_name $temp_application_name)
         echo $(docker rename $green_application_name $blue_application_name)
-        sed -i "s/application_port=.*/application_port=$green_application_port/" .env
         echo $(docker exec -i nginx-nginx-1 service nginx reload)
         echo $(docker rm -f $temp_application_name)
 fi

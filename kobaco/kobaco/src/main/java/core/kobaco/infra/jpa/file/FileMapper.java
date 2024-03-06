@@ -12,7 +12,7 @@ public class FileMapper {
 
     public FileEntity toEntity(File file) {
         return FileEntity.of(
-            file.getFileId(),
+            file.getId(),
             file.getFileName(),
             file.getFileType(),
             file.getParentFileId() != null ? FileEntity.from(file.getParentFileId()) : null,
@@ -31,7 +31,7 @@ public class FileMapper {
     }
 
     public NamespaceEntity toEntity(Namespace namespace) {
-        return NamespaceEntity.of(namespace.getNamespaceId(), UserEntity.from(namespace.getUserId()));
+        return NamespaceEntity.of(namespace.getId(), UserEntity.from(namespace.getUserId()));
     }
 
     public Namespace toDomain(NamespaceEntity namespaceEntity) {

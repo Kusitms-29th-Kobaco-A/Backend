@@ -1,6 +1,7 @@
 package core.kobaco.application.comment.service;
 
-import core.kobaco.application.comment.service.dto.CommentDetail;
+import core.kobaco.application.comment.service.dto.CommentCreateResponse;
+import core.kobaco.application.comment.service.dto.CommentDetailResponse;
 import core.kobaco.domain.comment.*;
 
 import core.kobaco.domain.user.UserUtils;
@@ -30,38 +31,28 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentDetail createComment(CommentDetail commentDetail, Long advertiseId) {
+    public CommentCreateResponse createComment(String content, Long advertiseId) {
         final Long userId = userUtils.getRequestUserId();
-
         if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자가 인증되지 않았습니다.");
         }
-
-        Comment comment = new Comment(
-                null,
-                commentDetail.getContent(),
-                userId,
-                advertiseId
-        );
-
+        Comment comment = new Comment(null, content, userId);
         Comment savedCommentEntity = commentRepository.save(comment, advertiseId);
-
-        String userEmail = getUserEmail(userId);
-
-        return new CommentDetail(
-                savedCommentEntity.getContent());
+        return CommentCreateResponse.of(savedCommentEntity.getContent());
     }
 
-    public List<CommentDetail> getAllComments(Long advertiseId) {
+    public List<CommentDetailResponse> getAllComments(Long advertiseId) {
         List<Comment> comments = commentRepository.findAllByAdvertiseId(advertiseId);
         return comments.stream()
-                .map(comment -> new CommentDetail(comment.getContent()))
+                .map(comment -> {
+                    String userEmail = getUserEmail(comment.getCommenterId());
+                    return CommentDetailResponse.of(comment.getContent(), userEmail);
+                })
                 .collect(Collectors.toList());
     }
 
     private String getUserEmail(Long userId) {
         return userReader.read(userId).getEmail();
-
     }
 
     @Transactional

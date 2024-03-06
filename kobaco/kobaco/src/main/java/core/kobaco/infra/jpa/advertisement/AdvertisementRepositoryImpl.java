@@ -58,14 +58,14 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
             }
         }
         if(orderType.equals(OrderType.RECENT)){
-            return advertisementJpaRepository.findAllWithKeyword(pageable, keywordList)
+            return advertisementJpaRepository.findAllWithKeyword(pageable, keywordList, (long) keywordList.size())
                 .map(advertiseMapper::toDomain);
         }
         if(orderType.equals(OrderType.POPULAR)){
-            return advertisementJpaRepository.findAllWithKeywordOrderByPopularity(pageable, keywordList)
+            return advertisementJpaRepository.findAllWithKeywordOrderByPopularity(pageable, keywordList, (long) keywordList.size())
                 .map(advertiseMapper::toDomain);
         }
-        return advertisementJpaRepository.findAllWithKeywordOrderByViewCount(pageable, keywordList)
+        return advertisementJpaRepository.findAllWithKeywordOrderByViewCount(pageable, keywordList, (long) keywordList.size())
             .map(advertiseMapper::toDomain);
     }
 

@@ -26,16 +26,18 @@ public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementE
     Page<AdvertisementEntity> findSavedAllByUserId(Pageable pageable, @Param("userId") Long userId);
 
     @Query("""
-        select distinct ae
+        select ae
         from AdvertisementEntity ae
         join AdvertisementKeywordEntity ak on ak.advertisement=ae and ak.keyword in (
         select ke
         from KeywordEntity ke
         where ke.description in :keywordList
         )
+        group by ae.id
+        having count(distinct ak.keyword) = :keywordSize
         order by ae.uploadDate desc
         """)
-    Page<AdvertisementEntity> findAllWithKeyword(Pageable pageable, List<String> keywordList);
+    Page<AdvertisementEntity> findAllWithKeyword(Pageable pageable, List<String> keywordList, Long keywordSize);
 
 
     @Query("""
@@ -71,15 +73,17 @@ public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementE
         select ae
         from AdvertisementEntity ae
         join AdvertisementKeywordEntity ak on ak.advertisement=ae and ak.keyword in (
-        select ke
-        from KeywordEntity ke
-        where ke.description in :keywordList
+            select ke
+            from KeywordEntity ke
+            where ke.description in :keywordList
         )
+        join KeywordEntity ke on ke.description in :keywordList
         left join AdvertiseLikeEntity ale on ale.advertisement=ae
-        group by ae
+        group by ae.id
+        having count(distinct ak.keyword) = :keywordSize
         order by count(ale.advertisement) desc
         """)
-    Page<AdvertisementEntity> findAllWithKeywordOrderByPopularity(Pageable pageable, List<String> keywordList);
+    Page<AdvertisementEntity> findAllWithKeywordOrderByPopularity(Pageable pageable, @Param("keywordList") List<String> keywordList, Long keywordSize);
 
     @Query("""
         select ae
@@ -106,9 +110,11 @@ public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementE
         from KeywordEntity ke
         where ke.description in :keywordList
         )
+        group by ae.id
+        having count(distinct ak.keyword) = :keywordSize
         order by ae.viewCount desc
         """)
-    Page<AdvertisementEntity> findAllWithKeywordOrderByViewCount(Pageable pageable, List<String> keywordList);
+    Page<AdvertisementEntity> findAllWithKeywordOrderByViewCount(Pageable pageable, List<String> keywordList, Long keywordSize);
 
 
     @Modifying

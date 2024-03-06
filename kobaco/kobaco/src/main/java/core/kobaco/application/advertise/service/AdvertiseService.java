@@ -80,8 +80,9 @@ public class AdvertiseService {
             });
     }
 
-    public Page<AdvertiseSimpleResponse> getLikeAdvertiseList(Pageable pageable) {
-        List<AdvertiseSimpleResponse> advertiseSimpleResponses = advertiseLikeReader.getLikeAdvertiseIdList(pageable).stream()
+    public Page<AdvertiseSimpleResponse> getLikeAdvertiseList(Pageable pageable, List<String> keywordList) {
+        List<AdvertiseSimpleResponse> advertiseSimpleResponses =
+            advertiseLikeReader.getLikeAdvertiseIdList(pageable, keywordList).stream()
             .map(advertiseReader::getAdvertise)
             .map(advertise -> {
                 List<String> advertiseKeywordList = keywordReader.getKeywordList(advertiseKeywordReader.getKeywordIds(advertise.getId()))

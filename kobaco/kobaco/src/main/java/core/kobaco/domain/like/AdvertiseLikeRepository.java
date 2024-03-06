@@ -16,5 +16,5 @@ public interface AdvertiseLikeRepository {
 
     Optional<AdvertiseLike> findByAdvertisementIdAndUserId(Long advertiseId, Long userId);
 
-    List<Long> findTopLankAdvertiseId(Pageable pageable);
+    List<Long> findTopLankAdvertiseId(Pageable pageable, List<String> keywordList);
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -41,8 +42,10 @@ public class AdvertiseLikeRepositoryImpl implements AdvertiseLikeRepository {
     }
 
     @Override
-    public List<Long> findTopLankAdvertiseId(Pageable pageable) {
-        return advertiseLikeJpaRepository.findTopLankAdvertiseId(pageable);
+    public List<Long> findTopLankAdvertiseId(Pageable pageable, List<String> keywordList) {
+        if(Objects.isNull(keywordList) || keywordList.isEmpty())
+            return advertiseLikeJpaRepository.findTopLankAdvertiseId(pageable);
+        return advertiseLikeJpaRepository.findTopLankAdvertiseIdWithKeyword(pageable, keywordList, (long) keywordList.size());
     }
 
 }

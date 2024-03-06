@@ -4,29 +4,31 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.sql.Time;
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Advertisement {
-    private Long advertiseId;
+    private Long id;
     private String videoUrl;
+    private Time videoTime;
     private String title;
-    private String description;
     private LocalDate uploadDate;
     private String copy;
     private String copyDetail;
     private AdvertisementDetail advertisementDetail;
+    private Long viewCount;
 
     public static Advertisement of(Long advertiseId,
                                    String videoUrl,
+                                   Time videoTime,
                                    String title,
-                                   String description,
                                    LocalDate uploadDate,
                                    String copy,
                                    String copyDetail,
-                                   AdvertisementDetail advertisementDetail) {
-        return new Advertisement(advertiseId, videoUrl, title, description, uploadDate,copy, copyDetail, advertisementDetail);
+                                   AdvertisementDetail advertisementDetail,
+                                   Long viewCount) {
+        return new Advertisement(advertiseId, videoUrl, videoTime, title, uploadDate, copy, copyDetail, advertisementDetail, viewCount);
     }
 }

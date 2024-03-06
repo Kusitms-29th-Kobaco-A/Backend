@@ -16,8 +16,8 @@ public class SaveAppender {
     private final FileRepository fileRepository;
 
     public void append(Advertisement advertisement, File directory) {
-        final File savedFile = fileRepository.save(File.of(FileType.ADVERTISE, directory.getFileId()));
-        final AdvertiseSave advertiseSave = AdvertiseSave.of(savedFile.getFileId(),advertisement.getAdvertiseId());
+        final File savedFile = fileRepository.save(File.of(FileType.ADVERTISE, directory.getId(), directory.getNamespaceId()));
+        final AdvertiseSave advertiseSave = AdvertiseSave.of(savedFile.getId(),advertisement.getId());
         advertiseSaveRepository.save(advertiseSave);
     }
 }

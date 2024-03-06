@@ -1,4 +1,4 @@
-package core.kobaco.infra.jpa.image.config;
+package core.kobaco.infra.image.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

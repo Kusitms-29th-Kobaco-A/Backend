@@ -20,7 +20,9 @@ public class AdvertiseLikeManagerAdapter implements AdvertiseLikeManager {
 
     @Override
     public Boolean isLike(Long advertiseId) {
-        return advertiseLikeRepository.isLike(advertiseId, userUtils.getRequestUserId());
+        return userUtils.isLogin()
+            ? advertiseLikeRepository.isLike(advertiseId, userUtils.getRequestUserId())
+            : false;
     }
 
     @Override

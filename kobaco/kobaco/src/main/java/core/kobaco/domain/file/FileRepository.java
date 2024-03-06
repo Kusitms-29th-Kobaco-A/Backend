@@ -7,6 +7,11 @@ public interface FileRepository {
 
     Optional<File> findRootDirectoryByNamespaceId(Long namespaceId);
 
+    Optional<File> findCaptureDirectoryByUserId(Long userId);
+    Optional<File> findBasicDirectoryByUserId(Long userId);
+
+    Optional<File> findByFileName(String fileName);
+
     File save(File file);
 
     List<File> findAllByFileId(Long fileId);
@@ -14,4 +19,6 @@ public interface FileRepository {
     Optional<File> findByFileId(Long directoryId);
 
     void update(File file);
+
+    void delete(File directory);
 }

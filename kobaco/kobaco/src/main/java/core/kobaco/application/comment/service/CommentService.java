@@ -1,6 +1,6 @@
 package core.kobaco.application.comment.service;
 
-import core.kobaco.application.comment.service.dto.CommentCreateResponse;
+import core.kobaco.application.comment.service.dto.CommentCreateRequest;
 import core.kobaco.application.comment.service.dto.CommentDetailResponse;
 import core.kobaco.domain.comment.*;
 
@@ -31,14 +31,14 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentCreateResponse createComment(String content, Long advertiseId) {
+    public CommentCreateRequest createComment(String content, Long advertiseId) {
         final Long userId = userUtils.getRequestUserId();
         if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자가 인증되지 않았습니다.");
         }
         Comment comment = new Comment(null, content, userId);
         Comment savedCommentEntity = commentRepository.save(comment, advertiseId);
-        return CommentCreateResponse.of(savedCommentEntity.getContent());
+        return CommentCreateRequest.of(savedCommentEntity.getContent());
     }
 
     public List<CommentDetailResponse> getAllComments(Long advertiseId) {

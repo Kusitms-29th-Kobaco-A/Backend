@@ -5,14 +5,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CommentCreateResponse {
+public class CommentCreateRequest {
     private String content;
 
-    public CommentCreateResponse(String content) {
+    public CommentCreateRequest(String content) {
         this.content = content;
     }
 
-    public static CommentCreateResponse of(String content) {
-        return new CommentCreateResponse(content);
+    public static CommentCreateRequest of(String content) {
+        return new CommentCreateRequest(content);
     }
 }

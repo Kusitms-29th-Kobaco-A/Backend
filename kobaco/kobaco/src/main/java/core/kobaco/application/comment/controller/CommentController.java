@@ -2,7 +2,7 @@ package core.kobaco.application.comment.controller;
 
 import core.kobaco.application.comment.service.CommentLikeDetailResponse;
 import core.kobaco.application.comment.service.CommentService;
-import core.kobaco.application.comment.service.dto.CommentCreateResponse;
+import core.kobaco.application.comment.service.dto.CommentCreateRequest;
 import core.kobaco.application.comment.service.dto.CommentDetailResponse;
 import core.kobaco.global.ApiResponse;
 
@@ -21,8 +21,8 @@ public class CommentController {
     private final CommentService commentService;
     @Operation(summary = "댓글 생성")
     @PostMapping("/{advertiseId}")
-    public ResponseEntity<CommentCreateResponse> createComment(@RequestBody CommentCreateResponse commentDTO, @PathVariable Long advertiseId) {
-        CommentCreateResponse createdComment = commentService.createComment(commentDTO.getContent(), advertiseId);
+    public ResponseEntity<CommentCreateRequest> createComment(@RequestBody CommentCreateRequest commentDTO, @PathVariable Long advertiseId) {
+        CommentCreateRequest createdComment = commentService.createComment(commentDTO.getContent(), advertiseId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
     }
 

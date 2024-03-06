@@ -1,8 +1,8 @@
-package core.kobaco.domain.commentLike.adapter;
+package core.kobaco.domain.commentlike.adapter;
 
-import core.kobaco.application.comment.service.CommentLikeManager;
-import core.kobaco.domain.commentLike.service.CommentLike;
-import core.kobaco.domain.commentLike.service.CommentLikeRepository;
+import core.kobaco.domain.commentlike.service.CommentLikeManager;
+import core.kobaco.domain.commentlike.service.CommentLike;
+import core.kobaco.domain.commentlike.service.CommentLikeRepository;
 import core.kobaco.domain.user.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

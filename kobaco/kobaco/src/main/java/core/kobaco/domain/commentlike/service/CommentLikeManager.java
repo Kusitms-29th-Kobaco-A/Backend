@@ -1,4 +1,4 @@
-package core.kobaco.application.comment.service;
+package core.kobaco.domain.commentlike.service;
 
 public interface CommentLikeManager {
     Long getLikeCount(Long commentId);

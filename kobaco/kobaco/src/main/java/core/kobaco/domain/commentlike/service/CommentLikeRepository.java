@@ -1,4 +1,4 @@
-package core.kobaco.domain.commentLike.service;
+package core.kobaco.domain.commentlike.service;
 
 import java.util.Optional;
 

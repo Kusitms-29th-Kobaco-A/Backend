@@ -1,6 +1,6 @@
 package core.kobaco.infra.jpa.comment.entity;
 
-import core.kobaco.domain.advertise.Advertisement;
+
 import core.kobaco.infra.jpa.advertisement.entity.AdvertisementEntity;
 import core.kobaco.infra.jpa.user.UserEntity;
 import jakarta.persistence.*;

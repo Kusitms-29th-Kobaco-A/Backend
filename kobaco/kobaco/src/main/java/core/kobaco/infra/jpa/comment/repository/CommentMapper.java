@@ -19,6 +19,7 @@ public class CommentMapper {
         AdvertisementEntity advertisementEntity = AdvertisementEntity.from(advertiseId);
         return CommentEntity.of(comment.getContent(), userEntity, advertisementEntity);
     }
+
     public Comment toDomain(CommentEntity commentEntity) {
         return new Comment(
                 commentEntity.getId(),

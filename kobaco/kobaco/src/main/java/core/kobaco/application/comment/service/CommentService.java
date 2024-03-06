@@ -1,68 +1,58 @@
 package core.kobaco.application.comment.service;
 
-import core.kobaco.application.comment.service.dto.CommentDetail;
+import core.kobaco.application.comment.service.dto.CommentCreateRequest;
+import core.kobaco.application.comment.service.dto.CommentDetailResponse;
 import core.kobaco.domain.comment.*;
 
-import core.kobaco.domain.user.User;
-import core.kobaco.domain.user.UserRepository;
 import core.kobaco.domain.user.UserUtils;
 
+import core.kobaco.domain.user.service.UserReader;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
+    private final UserReader userReader;
     private final UserUtils userUtils;
     private final CommentLikeManager commentLikeManager;
 
+    public CommentService(CommentRepository commentRepository, UserReader userReader, UserUtils userUtils, CommentLikeManager commentLikeManager) {
+        this.commentRepository = commentRepository;
+        this.userReader = userReader;
+        this.userUtils = userUtils;
+        this.commentLikeManager = commentLikeManager;
+    }
+
     @Transactional
-    public CommentDetail createComment(CommentDetail commentDetail, Long advertiseId) {
-
+    public CommentCreateRequest createComment(String content, Long advertiseId) {
         final Long userId = userUtils.getRequestUserId();
-
         if (userId == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "사용자가 인증되지 않았습니다.");
         }
-
-        Comment comment = new Comment(
-                null,
-                commentDetail.getContent(),
-                userId,
-                advertiseId
-        );
-
+        Comment comment = new Comment(null, content, userId);
         Comment savedCommentEntity = commentRepository.save(comment, advertiseId);
-
-        return new CommentDetail(
-                savedCommentEntity.getCommentId(),
-                savedCommentEntity.getContent(),
-                getUserEmail(userId)
-        );
-
+        return CommentCreateRequest.of(savedCommentEntity.getContent());
     }
 
-    public List<CommentDetail> getAllComments(Long advertiseId) {
+    public List<CommentDetailResponse> getAllComments(Long advertiseId) {
         List<Comment> comments = commentRepository.findAllByAdvertiseId(advertiseId);
         return comments.stream()
-                .map(comment -> new CommentDetail(comment.getCommentId(), comment.getContent(), getUserEmail(comment.getCommenterId())))
+                .map(comment -> {
+                    String userEmail = getUserEmail(comment.getCommenterId());
+                    return CommentDetailResponse.of(comment.getContent(), userEmail);
+                })
                 .collect(Collectors.toList());
     }
 
     private String getUserEmail(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
-        return user.getEmail();
+        return userReader.read(userId).getEmail();
     }
 
     @Transactional

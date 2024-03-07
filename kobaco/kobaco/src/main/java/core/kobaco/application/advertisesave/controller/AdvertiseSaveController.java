@@ -3,7 +3,10 @@ package core.kobaco.application.advertisesave.controller;
 import core.kobaco.application.advertisesave.service.AdvertiseSaveService;
 import core.kobaco.application.advertisesave.service.dto.AdvertiseSaveRequest;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,10 +26,12 @@ public class AdvertiseSaveController {
         advertiseSaveService.saveAdvertise(request.directoryId(), request.advertiseId());
     }
 
-    @Operation(summary = "광고 캡쳐 저장")
-    @PostMapping("/advertises/{advertiseId}/capture")
+    @Operation(summary = "광고 캡쳐 저장",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content =
+        @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)))
+    @PostMapping(value = "/advertises/{advertiseId}/capture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void saveAdvertiseCapture(
-        @RequestPart("imageFile")MultipartFile imageFile,
+        @Parameter(content = @Content(mediaType=MediaType.MULTIPART_FORM_DATA_VALUE)) @RequestPart("imageFile")MultipartFile imageFile,
         @PathVariable Long advertiseId
         ){
         advertiseSaveService.captureAdvertise(imageFile, advertiseId);

@@ -8,11 +8,11 @@ import core.kobaco.global.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,9 +29,9 @@ public class CommentController {
 
     @Operation(summary = "댓글 조회")
     @GetMapping("/{advertiseId}")
-    public ResponseEntity<List<CommentDetailResponse>> getAllComments(@PathVariable Long advertiseId) {
-        List<CommentDetailResponse> comments = commentService.getAllComments(advertiseId);
-        return ApiResponse.success(comments);
+    public ResponseEntity<Page<CommentDetailResponse>> getAllComments(@PathVariable Long advertiseId, Pageable pageable) {
+        Page<CommentDetailResponse> commentsPage = commentService.getAllComments(advertiseId, pageable);
+        return ApiResponse.success(commentsPage);
     }
 
     @Operation(summary = "댓글 좋아요")

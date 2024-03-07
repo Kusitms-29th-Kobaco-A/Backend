@@ -9,12 +9,11 @@ import core.kobaco.domain.user.UserUtils;
 
 import core.kobaco.domain.user.service.UserReader;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -43,15 +42,10 @@ public class CommentService {
             return CommentCreateRequest.of(savedCommentEntity.getContent());
         }
 
-        public List<CommentDetailResponse> getAllComments(Long advertiseId) {
-            List<Comment> comments = commentRepository.findAllByAdvertiseId(advertiseId);
-            return comments.stream()
-                    .map(comment -> {
-                        String userEmail = getUserEmail(comment.getCommenterId());
-                        return CommentDetailResponse.of(comment.getCommentId(), comment.getContent(), userEmail);
-                    })
-                    .collect(Collectors.toList());
-        }
+    public Page<CommentDetailResponse> getAllComments(Long advertiseId, Pageable pageable) {
+        Page<Comment> commentsPage = commentRepository.findAllByAdvertiseId(advertiseId, pageable);
+        return commentsPage.map(comment -> CommentDetailResponse.of(comment.getCommentId(), comment.getContent(), getUserEmail(comment.getCommenterId())));
+    }
 
         private String getUserEmail(Long userId) {
             return userReader.read(userId).getEmail();

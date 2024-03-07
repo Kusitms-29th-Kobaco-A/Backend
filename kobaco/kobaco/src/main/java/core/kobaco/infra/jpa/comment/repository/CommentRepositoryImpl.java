@@ -6,9 +6,10 @@ import core.kobaco.domain.comment.CommentRepository;
 import core.kobaco.infra.comment.CommentJpaRepository;
 import core.kobaco.infra.jpa.comment.entity.CommentEntity;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -36,9 +37,9 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public List<Comment> findAllByAdvertiseId(Long advertiseId) {
-        List<CommentEntity> commentEntities = commentJpaRepository.findAllByAdvertiseId(advertiseId);
-        return commentMapper.toDomainList(commentEntities);
+    public Page<Comment> findAllByAdvertiseId(Long advertiseId, Pageable pageable) {
+        Page<CommentEntity> commentEntitiesPage = commentJpaRepository.findAllByAdvertiseId(advertiseId, pageable);
+        return commentEntitiesPage.map(commentMapper::toDomain);
     }
 
 }

@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -36,7 +37,7 @@ public class AdvertiseService {
 
 
     @Transactional
-    public void createAdvertise(AdvertiseCreateRequest request){
+    public void createAdvertise(AdvertiseCreateRequest request) {
         final List<Long> keywordIdList = keywordFactory.upsert(request.keywordList());
         advertiseAppender.append(request.toDomain(), keywordIdList);
     }
@@ -68,64 +69,39 @@ public class AdvertiseService {
 
 
     public Page<AdvertiseSimpleResponse> getSaveAdvertiseList(Pageable pageable) {
-        if(!userUtils.isLogin())
+        if (!userUtils.isLogin())
             return Page.empty();
         return advertiseReader.getSaveAdvertiseList(userUtils.getRequestUserId(), pageable)
-            .map(advertise -> {
-                List<String> advertiseKeywordList = keywordReader.getKeywordList(advertiseKeywordReader.getKeywordIds(advertise.getId()))
-                    .stream()
-                    .map(Keyword::getKeyword)
-                    .toList();
-                return AdvertiseSimpleResponse.of(advertise, advertiseKeywordList);
-            });
+            .map(this::convertSimpleResponse);
     }
 
     public Page<AdvertiseSimpleResponse> getLikeAdvertiseList(Pageable pageable, List<String> keywordList) {
         List<AdvertiseSimpleResponse> advertiseSimpleResponses =
             advertiseLikeReader.getLikeAdvertiseIdList(pageable, keywordList).stream()
-            .map(advertiseReader::getAdvertise)
-            .map(advertise -> {
-                List<String> advertiseKeywordList = keywordReader.getKeywordList(advertiseKeywordReader.getKeywordIds(advertise.getId()))
-                    .stream()
-                    .map(Keyword::getKeyword)
-                    .toList();
-                return AdvertiseSimpleResponse.of(advertise, advertiseKeywordList);
-            })
-            .toList();
+                .map(advertiseReader::getAdvertise)
+                .map(this::convertSimpleResponse)
+                .toList();
         return new PageImpl<>(advertiseSimpleResponses, pageable, advertiseSimpleResponses.size());
     }
 
     public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable, List<String> keywordList, OrderType orderType) {
         return advertiseReader.getAllAdvertiseList(pageable, keywordList, orderType)
-            .map(advertise -> {
-                List<String> advertiseKeywordList = keywordReader.getKeywordList(advertiseKeywordReader.getKeywordIds(advertise.getId()))
-                    .stream()
-                    .map(Keyword::getKeyword)
-                    .toList();
-                return AdvertiseSimpleResponse.of(advertise, advertiseKeywordList);
-            });
+            .map(this::convertSimpleResponse);
     }
+
+
 
     public Page<AdvertiseSimpleResponse> getRecommendAdvertiseList(Pageable pageable, Long advertiseId) {
         final Advertisement advertisement = advertiseReader.getAdvertise(advertiseId);
         return advertiseReader.getRecommendAdvertiseList(pageable, advertisement)
-            .map(advertise -> {
-                List<String> advertiseKeywordList = keywordReader.getKeywordList(advertiseKeywordReader.getKeywordIds(advertise.getId()))
-                    .stream()
-                    .map(Keyword::getKeyword)
-                    .toList();
-                return AdvertiseSimpleResponse.of(advertise, advertiseKeywordList);
-            });
+            .map(this::convertSimpleResponse);
     }
 
     public Page<TrendAdvertiseSimpleResponse> getTrendAdvertiseList(Pageable pageable) {
         return advertiseTrendReader.getTrendList(pageable)
             .map(advertiseTrend -> {
                 Advertisement advertisement = advertiseReader.getAdvertise(advertiseTrend.getAdvertiseId());
-                List<String> advertiseKeywordList = keywordReader.getKeywordList(advertiseKeywordReader.getKeywordIds(advertisement.getId()))
-                    .stream()
-                    .map(Keyword::getKeyword)
-                    .toList();
+                List<String> advertiseKeywordList = getKeywordList(advertisement);
                 return TrendAdvertiseSimpleResponse.of(
                     AdvertiseSimpleResponse.of(advertisement, advertiseKeywordList),
                     advertiseTrend.getTitle()
@@ -135,6 +111,21 @@ public class AdvertiseService {
 
     @Transactional
     public void trendAdvertise(Long advertiseId, AdvertiseTrendCreateRequest request) {
-        advertiseAppender.appendTrend(AdvertisementTrend.of(advertiseId,request.title()));
+        advertiseAppender.appendTrend(AdvertisementTrend.of(advertiseId, request.title()));
+    }
+
+
+    private AdvertiseSimpleResponse convertSimpleResponse(Advertisement advertise) {
+        List<String> advertiseKeywordList = getKeywordList(advertise);
+
+        return AdvertiseSimpleResponse.of(advertise, advertiseKeywordList);
+    }
+
+    private List<String> getKeywordList(Advertisement advertise) {
+        final List<Long> keywordIds = advertiseKeywordReader.getKeywordIds(advertise.getId());
+        return keywordIds.stream()
+            .map(keywordReader::getKeyword)
+            .map(Keyword::getKeyword)
+            .toList();
     }
 }

@@ -124,4 +124,11 @@ public interface AdvertisementJpaRepository extends JpaRepository<AdvertisementE
         where ae.id = :advertiseId
         """)
     void updateViewCount(Long advertiseId);
+
+    @Query("""
+        select ae
+        from AdvertisementEntity ae
+        order by ae.uploadDate desc
+        """)
+    Page<AdvertisementEntity> findAllOrderByUploadDateDesc(Pageable pageable);
 }

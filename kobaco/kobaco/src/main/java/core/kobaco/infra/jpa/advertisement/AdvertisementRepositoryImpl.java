@@ -45,7 +45,7 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
     public Page<Advertisement> findAllWithKeyword(Pageable pageable, List<String> keywordList, OrderType orderType) {
         if(Objects.isNull(keywordList)||keywordList.isEmpty()){
             if(orderType.equals(OrderType.RECENT)){
-                return advertisementJpaRepository.findAll(pageable)
+                return advertisementJpaRepository.findAllOrderByUploadDateDesc(pageable)
                     .map(advertiseMapper::toDomain);
             }
             if(orderType.equals(OrderType.POPULAR)){

@@ -22,4 +22,6 @@ public interface AdvertisementRepository {
     Page<Advertisement> findAllByMakerCompanyAndAdvertiseId(Pageable pageable, String makerCompany, Long advertiseId);
 
     void upViewCount(Long advertiseId);
+
+    Page<Advertisement> findAllOrderByViewCount(Pageable pageable, List<String> keywordList);
 }

@@ -76,12 +76,8 @@ public class AdvertiseService {
     }
 
     public Page<AdvertiseSimpleResponse> getLikeAdvertiseList(Pageable pageable, List<String> keywordList) {
-        List<AdvertiseSimpleResponse> advertiseSimpleResponses =
-            advertiseLikeReader.getLikeAdvertiseIdList(pageable, keywordList).stream()
-                .map(advertiseReader::getAdvertise)
-                .map(this::convertSimpleResponse)
-                .toList();
-        return new PageImpl<>(advertiseSimpleResponses, pageable, advertiseSimpleResponses.size());
+        return advertiseReader.getAllTopViewAdvertiseList(pageable, keywordList)
+            .map(this::convertSimpleResponse);
     }
 
     public Page<AdvertiseSimpleResponse> getAdvertiseList(Pageable pageable, List<String> keywordList, OrderType orderType) {
@@ -117,7 +113,6 @@ public class AdvertiseService {
 
     private AdvertiseSimpleResponse convertSimpleResponse(Advertisement advertise) {
         List<String> advertiseKeywordList = getKeywordList(advertise);
-
         return AdvertiseSimpleResponse.of(advertise, advertiseKeywordList);
     }
 

@@ -38,6 +38,10 @@ public class AdvertiseReader {
         return advertisementRepository.findAllWithKeyword(pageable, keywordList, orderType);
     }
 
+    public Page<Advertisement> getAllTopViewAdvertiseList(Pageable pageable, List<String> keywordList) {
+        return advertisementRepository.findAllOrderByViewCount(pageable, keywordList);
+    }
+
     public Page<Advertisement> getSaveAdvertiseList(Long requestUserId, Pageable pageable) {
         return advertisementRepository.findSavedAllByUserId(pageable, requestUserId);
     }

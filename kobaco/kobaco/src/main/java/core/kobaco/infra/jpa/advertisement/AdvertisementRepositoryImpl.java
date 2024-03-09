@@ -85,4 +85,14 @@ public class AdvertisementRepositoryImpl implements AdvertisementRepository {
     public void upViewCount(Long advertiseId) {
         advertisementJpaRepository.updateViewCount(advertiseId);
     }
+
+    @Override
+    public Page<Advertisement> findAllOrderByViewCount(Pageable pageable, List<String> keywordList) {
+        if(Objects.isNull(keywordList)||keywordList.isEmpty()){
+            return advertisementJpaRepository.findAllOrderByViewCount(pageable)
+                .map(advertiseMapper::toDomain);
+        }
+        return advertisementJpaRepository.findAllWithKeywordOrderByViewCount(pageable, keywordList, (long) keywordList.size())
+            .map(advertiseMapper::toDomain);
+    }
 }
